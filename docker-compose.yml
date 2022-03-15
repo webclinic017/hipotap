@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  brocker:
+    container_name: hipotap_brocker
+    build: brocker_service/
+    hostname: hipotap-brocker
+    networks:
+      - hipotap-net
+  web:
+    container_name: hipotap_web
+    build: web_service
+    networks:
+      - hipotap-net
+    depends_on:
+      - brocker
+    ports:
+      - "5000:5000"
+  trip:
+    container_name: hipotap_trip
+    build: trip_service
+    networks:
+      - hipotap-net
+    depends_on:
+      - brocker
+
+networks:
+  hipotap-net:
+    driver: bridge
