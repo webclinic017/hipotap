@@ -1,17 +1,17 @@
-<mxfile host="app.diagrams.net" modified="2022-03-25T07:52:35.092Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36" etag="O9-_lR0wAQ1HaFp-L7sz" version="17.2.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-30T11:45:40.427Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36" etag="6sR3OzNVOuNI94E05yqv" version="17.2.4" type="github">
   <diagram id="kO__wrCLHh8eWBU0QF4_" name="Page-1">
-    <mxGraphModel dx="3796" dy="2719" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2087" dy="1772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ezrv8BM9sVap5lZGodFx-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-840" y="-850" width="920" height="600" as="geometry" />
+          <mxGeometry x="-840" y="-890" width="920" height="600" as="geometry" />
         </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-1" value="&lt;b&gt;Web service&lt;/b&gt;&lt;br&gt;&lt;br&gt;strona" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-440" y="-830" width="120" height="60" as="geometry" />
+          <mxGeometry x="-440" y="-880" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ezrv8BM9sVap5lZGodFx-2" value="&lt;b&gt;Travel&amp;nbsp;service&lt;/b&gt;&lt;br&gt;&lt;p&gt;pojedynczy przelot/droga&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-550" y="-330" width="140" height="80" as="geometry" />
+        <mxCell id="ezrv8BM9sVap5lZGodFx-2" value="&lt;b&gt;Travel&amp;nbsp;service&lt;/b&gt;&lt;br&gt;&lt;p&gt;pojedynczy przelot/droga&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="-520" y="-260" width="140" height="80" as="geometry" />
         </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-3" value="&lt;b&gt;Offer service&lt;/b&gt;&lt;br&gt;&lt;br&gt;Konfiguracja wycieczki" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-720" y="-490" width="140" height="80" as="geometry" />
@@ -26,7 +26,7 @@
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-9" value="GetOffers()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="53pI2VVZi_R9F05QZi0w-8" vertex="1" connectable="0">
           <mxGeometry x="-0.8178" relative="1" as="geometry">
-            <mxPoint x="16" as="offset" />
+            <mxPoint x="16" y="-60" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ezrv8BM9sVap5lZGodFx-4" target="ezrv8BM9sVap5lZGodFx-7" edge="1">
@@ -62,8 +62,11 @@
         <mxCell id="ezrv8BM9sVap5lZGodFx-4" value="&lt;b&gt;Broker&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-440" y="-630" width="120" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="FXThsR5IkIlW8cSpPoi2-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.006;entryY=0.573;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ezrv8BM9sVap5lZGodFx-5" target="FXThsR5IkIlW8cSpPoi2-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-5" value="&lt;b&gt;Payment service&lt;/b&gt;&lt;br&gt;&lt;br&gt;zatwierdzanie przelewu/karty" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-180" y="-530" width="140" height="80" as="geometry" />
+          <mxGeometry x="-110" y="-580" width="140" height="80" as="geometry" />
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="ezrv8BM9sVap5lZGodFx-3" target="ezrv8BM9sVap5lZGodFx-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -118,19 +121,19 @@
           <mxGeometry x="-720" y="-640" width="140" height="80" as="geometry" />
         </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-7" value="&lt;b&gt;TourOperator service&lt;/b&gt;&lt;br&gt;&lt;p&gt;zewnętrzny dostawca&amp;nbsp;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-180" y="-770" width="140" height="80" as="geometry" />
+          <mxGeometry x="110" y="-740" width="140" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="ezrv8BM9sVap5lZGodFx-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ezrv8BM9sVap5lZGodFx-10" target="ezrv8BM9sVap5lZGodFx-1" edge="1">
+        <mxCell id="FXThsR5IkIlW8cSpPoi2-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ezrv8BM9sVap5lZGodFx-10" target="53pI2VVZi_R9F05QZi0w-18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-10" value="Scrapper" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-440" y="-960" width="120" height="60" as="geometry" />
+          <mxGeometry x="-470" y="-370" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ezrv8BM9sVap5lZGodFx-12" value="&lt;b&gt;Hotel service&lt;/b&gt;&lt;br&gt;&lt;p&gt;dostępność hoteli&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-350" y="-330" width="140" height="80" as="geometry" />
+        <mxCell id="ezrv8BM9sVap5lZGodFx-12" value="&lt;b&gt;Hotel service&lt;/b&gt;&lt;br&gt;&lt;p&gt;dostępność hoteli&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="-330" y="-260" width="140" height="80" as="geometry" />
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-1" value="&lt;b&gt;Orchestrator&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-440" y="-740" width="120" height="60" as="geometry" />
+          <mxGeometry x="-650" y="-600" width="70" height="40" as="geometry" />
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="53pI2VVZi_R9F05QZi0w-3" target="ezrv8BM9sVap5lZGodFx-6" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -176,6 +179,12 @@
         </mxCell>
         <mxCell id="53pI2VVZi_R9F05QZi0w-18" value="&lt;b&gt;Trip service&lt;/b&gt;&lt;br&gt;&lt;p&gt;wyczeczka bez szczegółowej konfiguracji&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-720" y="-380" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="FXThsR5IkIlW8cSpPoi2-1" value="&lt;b&gt;Dispatcher&lt;br&gt;rozsyła do innych serwisów&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="-760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FXThsR5IkIlW8cSpPoi2-3" value="&lt;b&gt;bank service&lt;/b&gt;&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="-550" width="140" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
