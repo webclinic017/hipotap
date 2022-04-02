@@ -1,33 +1,55 @@
 version: '3.9'
 
 services:
-  brocker:
-    container_name: hipotap_brocker
-    build: brocker_service/
-    hostname: hipotap-brocker
+  broker:
+    extends:
+      file: broker_service/docker-compose.yml
+      service: broker
     networks:
       - hipotap-net
+
   web:
-    container_name: hipotap_web
-    build: web_service
+    extends:
+      file: web_service/docker-compose.yml
+      service: web
+    depends_on:
+      - broker
     networks:
       - hipotap-net
+
+  api_gateway:
+    extends:
+      file: api_gateway/docker-compose.yml
+      service: api_gateway
     depends_on:
-      - brocker
-    ports:
-      - "5000:5000"
-    environment:
-    - FLASK_APP=main.py
-    - FLASK_ENV=development
-    volumes:
-      - './web_service/src:/hipotap_web'  
+      - broker
+    networks:
+      - hipotap-net
+
   trip:
-    container_name: hipotap_trip
-    build: trip_service
+    extends:
+      file: trip_service/docker-compose.yml
+      service: trip
+    depends_on:
+      - broker
     networks:
       - hipotap-net
+
+  customer:
+    extends:
+      file: customer_service/docker-compose.yml
+      service: customer
     depends_on:
-      - brocker
+      - broker
+    networks:
+      - hipotap-net
+
+  customer_db:
+    extends:
+      file: customer_service/docker-compose.yml
+      service: customer_db
+    networks:
+      - hipotap-net
 
 networks:
   hipotap-net:

@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  api_gateway:
+    container_name: hipotap_api_gateway
+    build:
+      context: ../
+      dockerfile: api_gateway/Dockerfile
+    hostname: hipotap_api_gateway

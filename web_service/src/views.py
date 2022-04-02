@@ -4,9 +4,11 @@ from app import app
 from flask import render_template
 import pika
 import sys
-
+from app.auth import restricted
 
 @app.route('/')
+# @restricted(access_level="user")
+# @restricted("user")
 def index():
     credentials = pika.PlainCredentials('guest', 'guest')
     parameters = pika.ConnectionParameters('hipotap_brocker',
@@ -28,3 +30,10 @@ def index():
     connection.close()
     return render_template('index.html')
 #    return "hello world!"
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+@app.route('/logout')
+def logout():
+    return render_template('login.html')
