@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 
-from flask import Flask
+from app import app
+from flask import render_template
 import pika
 import sys
 
-app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
+def index():
     credentials = pika.PlainCredentials('guest', 'guest')
     parameters = pika.ConnectionParameters('hipotap_brocker',
                                             5672,
                                             '/',
                                             credentials)
     connection = pika.BlockingConnection(parameters)
-    # connection = pika.BlockingConnection(pika.ConnectionParameters('hipotap_brocker'))
     channel = connection.channel()
 
     channel.queue_declare(queue='hello')
+
+    message = 'Hello World!'
     channel.basic_publish(exchange='',
             routing_key='hello',
-            body='Hello world')
-    print("Message sent", file=sys.stdout)
+            body=message)
+    print(f"Message '{message}' sent.", file=sys.stdout)
+    sys.stdout.flush()
 
     connection.close()
-    return 'Hello, Docker!'
-
-
+    return render_template('index.html')
+#    return "hello world!"
