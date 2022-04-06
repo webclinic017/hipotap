@@ -32,6 +32,7 @@ services:
       service: customer
     depends_on:
       - broker
+      - customer_db
     networks:
       - hipotap-net
 
