@@ -16,10 +16,10 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='customer.proto',
-  package='customer_pb',
+  package='customer',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0e\x63ustomer.proto\x12\x0b\x63ustomer_pb\"8\n\x15\x43ustomerCredentialsPB\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"d\n\nCustomerPB\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07surname\x18\x02 \x01(\t\x12\x37\n\x0b\x63redentials\x18\x03 \x01(\x0b\x32\".customer_pb.CustomerCredentialsPBb\x06proto3')
+  serialized_pb=_b('\n\x0e\x63ustomer.proto\x12\x08\x63ustomer\"8\n\x15\x43ustomerCredentialsPB\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"/\n\x0e\x43ustomerDataPB\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07surname\x18\x02 \x01(\t\"j\n\nCustomerPB\x12&\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\x18.customer.CustomerDataPB\x12\x34\n\x0b\x63redentials\x18\x03 \x01(\x0b\x32\x1f.customer.CustomerCredentialsPBb\x06proto3')
 )
 
 
@@ -27,20 +27,20 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _CUSTOMERCREDENTIALSPB = _descriptor.Descriptor(
   name='CustomerCredentialsPB',
-  full_name='customer_pb.CustomerCredentialsPB',
+  full_name='customer.CustomerCredentialsPB',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='email', full_name='customer_pb.CustomerCredentialsPB.email', index=0,
+      name='email', full_name='customer.CustomerCredentialsPB.email', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='password', full_name='customer_pb.CustomerCredentialsPB.password', index=1,
+      name='password', full_name='customer.CustomerCredentialsPB.password', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -58,34 +58,65 @@ _CUSTOMERCREDENTIALSPB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31,
-  serialized_end=87,
+  serialized_start=28,
+  serialized_end=84,
 )
 
 
-_CUSTOMERPB = _descriptor.Descriptor(
-  name='CustomerPB',
-  full_name='customer_pb.CustomerPB',
+_CUSTOMERDATAPB = _descriptor.Descriptor(
+  name='CustomerDataPB',
+  full_name='customer.CustomerDataPB',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='customer_pb.CustomerPB.name', index=0,
+      name='name', full_name='customer.CustomerDataPB.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='surname', full_name='customer_pb.CustomerPB.surname', index=1,
+      name='surname', full_name='customer.CustomerDataPB.surname', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=86,
+  serialized_end=133,
+)
+
+
+_CUSTOMERPB = _descriptor.Descriptor(
+  name='CustomerPB',
+  full_name='customer.CustomerPB',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='credentials', full_name='customer_pb.CustomerPB.credentials', index=2,
+      name='data', full_name='customer.CustomerPB.data', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='credentials', full_name='customer.CustomerPB.credentials', index=1,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -103,26 +134,35 @@ _CUSTOMERPB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=89,
-  serialized_end=189,
+  serialized_start=135,
+  serialized_end=241,
 )
 
+_CUSTOMERPB.fields_by_name['data'].message_type = _CUSTOMERDATAPB
 _CUSTOMERPB.fields_by_name['credentials'].message_type = _CUSTOMERCREDENTIALSPB
 DESCRIPTOR.message_types_by_name['CustomerCredentialsPB'] = _CUSTOMERCREDENTIALSPB
+DESCRIPTOR.message_types_by_name['CustomerDataPB'] = _CUSTOMERDATAPB
 DESCRIPTOR.message_types_by_name['CustomerPB'] = _CUSTOMERPB
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CustomerCredentialsPB = _reflection.GeneratedProtocolMessageType('CustomerCredentialsPB', (_message.Message,), dict(
   DESCRIPTOR = _CUSTOMERCREDENTIALSPB,
   __module__ = 'customer_pb2'
-  # @@protoc_insertion_point(class_scope:customer_pb.CustomerCredentialsPB)
+  # @@protoc_insertion_point(class_scope:customer.CustomerCredentialsPB)
   ))
 _sym_db.RegisterMessage(CustomerCredentialsPB)
+
+CustomerDataPB = _reflection.GeneratedProtocolMessageType('CustomerDataPB', (_message.Message,), dict(
+  DESCRIPTOR = _CUSTOMERDATAPB,
+  __module__ = 'customer_pb2'
+  # @@protoc_insertion_point(class_scope:customer.CustomerDataPB)
+  ))
+_sym_db.RegisterMessage(CustomerDataPB)
 
 CustomerPB = _reflection.GeneratedProtocolMessageType('CustomerPB', (_message.Message,), dict(
   DESCRIPTOR = _CUSTOMERPB,
   __module__ = 'customer_pb2'
-  # @@protoc_insertion_point(class_scope:customer_pb.CustomerPB)
+  # @@protoc_insertion_point(class_scope:customer.CustomerPB)
   ))
 _sym_db.RegisterMessage(CustomerPB)
 

@@ -1,14 +1,15 @@
 import pika
 import uuid
+from typing import Tuple, Optional
 
 from .rpc_client import RpcClient
 from hipotap_common.queues.customer_queues import CUSTOMER_AUTH_QUEUE
-from hipotap_common.models.customer import CustomerCredentials
-
+from hipotap_common.models.customer import CustomerCredentials, CustomerData
+from hipotap_common.models.auth import AuthResponse
 
 class CustomerRpcClient(RpcClient):
 
-    def authenticate(self, customer_creds: CustomerCredentials):
+    def authenticate(self, customer_creds: CustomerCredentials) -> AuthResponse:
         if not isinstance(customer_creds, CustomerCredentials):
             raise  TypeError("Expected CustomerCredentials object")
 
@@ -29,4 +30,5 @@ class CustomerRpcClient(RpcClient):
         # Wait for response
         while self.response is None:
             self.connection.process_data_events()
-        return self.response.decode("utf-8")
+
+        return  AuthResponse.deserialize(self.response)

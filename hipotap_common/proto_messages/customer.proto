@@ -1,13 +1,17 @@
 syntax = "proto3";
-package customer_pb;
+package customer;
 
 message CustomerCredentialsPB {
   string email = 1;
   string password = 2;
 }
 
-message CustomerPB {
+message CustomerDataPB {
   string name = 1;
   string surname = 2;
+}
+
+message CustomerPB {
+  CustomerDataPB data = 1;
   CustomerCredentialsPB credentials = 3;
 }

@@ -1,49 +1,37 @@
-from multiprocessing import connection
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Form
 import pika
 import sys, time
 from hipotap_common.models.customer import CustomerCredentials
+from hipotap_common.models.auth import AuthStatus
 from rpc.customer_rpc_client import CustomerRpcClient
+from pydantic import BaseModel
+from typing import Optional
+
+
 CUSTOMER_AUTH_QUEUE = 'customer_auth'
+
+
+class AuthData(BaseModel):
+    email: str
+    password: str
+
 
 app = FastAPI()
 
 time.sleep(5)
 
-def boker_connection():
-    credentials = pika.PlainCredentials('guest', 'guest')
-    parameters = pika.ConnectionParameters('hipotap_broker',
-                                            5672,
-                                            '/',
-                                            credentials)
-    return pika.BlockingConnection(parameters)
 
-connection = boker_connection()
-
-responses = {}
-
-def on_service_response(ch, method, properties, body):
-    global reply
-    print(" [x] Received %r from CUSTOMER_SERVICE" % body)
-    reply = body.decode("utf-8")
-    ch.close()
-
-@app.get("/customer/authenticate/")
-async def root(email: str, password: str):
-    print("Got [GET]/]")
+@app.post("/customer/authenticate/")
+# async def authenticate(auth_data: AuthData):
+async def authenticate(email: str = Form(...), password: str = Form(...)):
+    print(f"Got [POST]/customer/authenticate/ with databaseemail={email}&password={password}")
     sys.stdout.flush()
     customer_client = CustomerRpcClient()
-    response = customer_client.authenticate(CustomerCredentials(email, password))
-    # channel = connection.channel()
+    auth_response = customer_client.authenticate(CustomerCredentials(email, password))
 
-    # consumer_tag = channel.basic_consume('amq.rabbitmq.reply-to',
-    #                           on_service_response,
-    #                           auto_ack=True)
-    # channel.basic_publish(
-    #     exchange='',
-    #     routing_key=CUSTOMER_AUTH_QUEUE,
-    #     body='Marco',
-    #     properties=pika.BasicProperties(reply_to='amq.rabbitmq.reply-to'))
-    # channel.start_consuming()
-
-    return {"reply": f"{response}"}
+    if auth_response.status == AuthStatus.OK:
+        print("Authentication OK")
+        sys.stdout.flush()
+        return {"name": auth_response.customer_data.name, "surname": auth_response.customer_data.surname}
+    else:
+        raise HTTPException(status_code=401, detail="Invalid credentials")

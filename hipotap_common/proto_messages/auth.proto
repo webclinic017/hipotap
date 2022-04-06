@@ -1,0 +1,14 @@
+syntax = "proto3";
+package auth;
+
+import "customer.proto";
+
+enum AuthStatus {
+      OK = 0;
+      INVALID_CREDENTIALS = 1;
+  }
+
+message AuthResponsePB {
+  AuthStatus status = 1;
+  customer.CustomerDataPB customer_data = 2;
+}
