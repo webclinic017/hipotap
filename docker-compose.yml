@@ -26,15 +26,6 @@ services:
     networks:
       - hipotap-net
 
-  trip:
-    extends:
-      file: trip_service/docker-compose.yml
-      service: trip
-    depends_on:
-      - broker
-    networks:
-      - hipotap-net
-
   customer:
     extends:
       file: customer_service/docker-compose.yml
