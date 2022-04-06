@@ -17,27 +17,38 @@
                 <div class="container">
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
-                            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                            <a href="{{ url_for('main.index') }}" class="button is-primary">
                                 Home
                             </a>
-                            <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                            <a href="{{ url_for('main.profile') }}" class="button is-primary">
                                 Profile
                             </a>
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                            <a href="{{ url_for('auth.login') }}" class="button is-primary">
                                 Login
                             </a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                            <a href="{{ url_for('auth.signup') }}" class="button is-primary">
                                 Sign Up
                             </a>
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                Logout
-                            </a>
+                            <form action="{{ url_for('auth.logout') }}" method="post">
+                                <button type="submit" class="button is-primary">Logout</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </nav>
         </div>
-
+        <div class="container has-text-centered">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="notification {{ category }}">
+                    <button class="delete" onClick="this.parentNode.parentNode.removeChild(this.parentNode);"></button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
         <div class="hero-body">
             <div class="container has-text-centered">
                {% block content %}

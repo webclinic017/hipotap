@@ -1,8 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 import requests
-# from . import db
+
+API_GATEWAY_URL = "http://hipotap_api_gateway:8000"
+AUTHENTICATE_ENDPOINT = f"{API_GATEWAY_URL}/customer/authenticate/"
 
 auth = Blueprint('auth', __name__)
+
+
 
 @auth.get('/login')
 def login():
@@ -15,8 +19,14 @@ def login_post():
     remember = True if request.form.get('remember') else False
 
     # call to API Gateway for authentication
-    reply = requests.get(f"http://hipotap_api_gateway:8000/customer/authenticate/?email={email}&password={password}").json()
-    session['username'] = reply['reply']
+    response = requests.post(AUTHENTICATE_ENDPOINT, data={'email':email, 'password':password})
+
+    if response.status_code != 200:
+        flash('Invalid credentials', 'is-danger')
+        return redirect(url_for('auth.login'))
+
+    customer_data = response.json()
+    session['username'] = customer_data['name']
     # return reply
     return redirect(url_for('main.profile'))
 
@@ -35,19 +45,5 @@ def signup_post():
 
 @auth.post('/logout')
 def logout():
-    return 'Logout'
-
-# from functools import wraps
-# from flask import g, abort
-
-
-
-# def restricted(access_level):
-#     def decorator(func):
-#         # @wraps(func)
-#         def wrapper(*args, **kwargs):
-#             if not g.user.access_level == access_level:
-#                 abort(403)
-#             return func(*args, **kwargs)
-#         return wrapper
-#     return decorator
+    flash("Logged out", "is-info")
+    return redirect(url_for('main.index'))
