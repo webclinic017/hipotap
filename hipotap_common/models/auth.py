@@ -1,8 +1,16 @@
 import base64
-
 from ..proto_messages.auth_pb2 import AuthResponsePB, AuthStatus
 from ..proto_messages.customer_pb2 import CustomerDataPB
 from .customer import CustomerData
+
+
+class InvalidCredentialsException(Exception):
+    pass
+
+class UserAlreadyExistsException(Exception):
+    pass
+
+
 class AuthResponse:
     def __init__(self, status: AuthStatus, customer_data: CustomerData = None):
         self.status = status

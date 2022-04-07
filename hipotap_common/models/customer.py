@@ -48,18 +48,21 @@ class CustomerData:
 
 
 class Customer:
-    def __init__(self, name, surname, credentials):
+    def __init__(self, name, surname, email, password):
         self.name = name
         self.surname = surname
-        self.credentials = credentials
+        self.email = email
+        self.password = password
 
     def __str__(self):
-        return f"{self.name} {self.surname} {self.credentials}"
+        return f"{self.name} {self.surname} {self.email} {self.password}"
 
     def serialize(self):
         customer_pb = CustomerPB()
-        customer_pb.data = CustomerData(self.name, self.surname).serialize()
-        customer_pb.credentials = self.credentials.serialize()
+        customer_pb.data.name = self.name
+        customer_pb.data.surname = self.surname
+        customer_pb.credentials.email = self.email
+        customer_pb.credentials.password = self.password
 
         return base64.b64encode(customer_pb.SerializeToString())
 
@@ -67,6 +70,4 @@ class Customer:
     def deserialize(cls, bytes: bytes):
         customer_pb = CustomerPB()
         customer_pb.ParseFromString(base64.b64decode(bytes))
-        customer_data_pb = CustomerDataPB()
-        customer_data_pb.ParseFromString(base64.b64decode(customer_pb.data))
-        return cls(customer_data_pb.name, customer_data_pb.surname, credentials=CustomerCredentials.deserialize(customer_pb.credentials))
+        return cls(customer_pb.data.name, customer_pb.data.surname, customer_pb.credentials.email, customer_pb.credentials.password)

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package hipotap;
+
+enum BaseStatus {
+      OK = 0;
+      FAIL = 1;
+  }
+
+message BaseResponsePB {
+    BaseStatus status = 1;
+    string message = 2;
+}

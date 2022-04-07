@@ -15,23 +15,32 @@
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="{{ url_for('main.index') }}">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                             <div>HIPOTAP</div>
+                        </a>
+                    </div>
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
                             <a href="{{ url_for('main.index') }}" class="button is-primary">
                                 Home
                             </a>
+                            {% if session['authenticated'] %}
                             <a href="{{ url_for('main.profile') }}" class="button is-primary">
                                 Profile
                             </a>
+                            <form action="{{ url_for('auth.logout') }}" method="post">
+                                <button type="submit" class="button is-primary">Logout</button>
+                            </form>
+                            {% else %}
                             <a href="{{ url_for('auth.login') }}" class="button is-primary">
                                 Login
                             </a>
                             <a href="{{ url_for('auth.signup') }}" class="button is-primary">
                                 Sign Up
                             </a>
-                            <form action="{{ url_for('auth.logout') }}" method="post">
-                                <button type="submit" class="button is-primary">Logout</button>
-                            </form>
+                            {% endif%}
                         </div>
                     </div>
                 </div>

@@ -11,3 +11,4 @@ services:
     - FLASK_ENV=development
     volumes:
       - './src/:/hipotap_web/'
+      - '../hipotap_common/:/hipotap_web/hipotap_common/'

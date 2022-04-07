@@ -1,10 +1,12 @@
 from sqlalchemy.orm.exc import NoResultFound
 import pika
+import base64
 
-from hipotap_common.queues.customer_queues import CUSTOMER_AUTH_QUEUE
-from hipotap_common.models.customer import CustomerCredentials, CustomerData
+from hipotap_common.queues.customer_queues import CUSTOMER_AUTH_QUEUE, CUSTOMER_REGISTER_QUEUE
+from hipotap_common.models.customer import CustomerCredentials, CustomerData, Customer
 from hipotap_common.models.auth import AuthResponse
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
+from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
 from customer_db.models import db_session, Customer_Table
 
 def boker_connection():
@@ -21,11 +23,16 @@ def broker_requests_handling_loop():
     channel = connection.channel()
     # Declare queues
     channel.queue_declare(queue=CUSTOMER_AUTH_QUEUE)
+    channel.queue_declare(queue=CUSTOMER_REGISTER_QUEUE)
 
     # Subscribe to queues
     channel.basic_consume(queue=CUSTOMER_AUTH_QUEUE,
             auto_ack=True,
             on_message_callback=on_auth_request)
+
+    channel.basic_consume(queue=CUSTOMER_REGISTER_QUEUE,
+            auto_ack=True,
+            on_message_callback=on_register_request)
 
     # Start handling requests
     print(' [*] Waiting for messages. To exit press CTRL+C')
@@ -46,6 +53,27 @@ def on_auth_request(ch, method, properties, body):
         except NoResultFound:
             print("No such customer")
             response = AuthResponse(AuthStatus.INVALID_CREDENTIALS, None).serialize()
+
+        ch.basic_publish('', routing_key=properties.reply_to,
+                         properties=pika.BasicProperties(correlation_id = \
+                                                         properties.correlation_id),
+                         body=response)
+        # ch.basic_ack(delivery_tag=method_frame.delivery_tag)
+
+def on_register_request(ch, method, properties, body):
+        print(f" [x] Received body: {body}")
+        customer = Customer.deserialize(body)
+        print(f" [x] Received Customer: {customer}")
+
+        response_pb = BaseResponsePB()
+        try:
+            customer = db_session.add(Customer_Table(email=customer.email, name=customer.name, surname=customer.surname, password=customer.password))
+            response_pb.status = BaseStatus.OK
+        except:
+            print("Customer already exists")
+            response_pb.status = BaseStatus.FAIL
+        finally:
+            response = base64.b64encode(response_pb.SerializeToString())
 
         ch.basic_publish('', routing_key=properties.reply_to,
                          properties=pika.BasicProperties(correlation_id = \
