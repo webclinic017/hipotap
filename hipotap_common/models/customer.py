@@ -1,6 +1,11 @@
 import base64
 
-from ..proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerDataPB, CustomerPB
+from ..proto_messages.customer_pb2 import (
+    CustomerCredentialsPB,
+    CustomerDataPB,
+    CustomerPB,
+)
+
 
 class CustomerCredentials:
     def __init__(self, email, password):
@@ -70,4 +75,9 @@ class Customer:
     def deserialize(cls, bytes: bytes):
         customer_pb = CustomerPB()
         customer_pb.ParseFromString(base64.b64decode(bytes))
-        return cls(customer_pb.data.name, customer_pb.data.surname, customer_pb.credentials.email, customer_pb.credentials.password)
+        return cls(
+            customer_pb.data.name,
+            customer_pb.data.surname,
+            customer_pb.credentials.email,
+            customer_pb.credentials.password,
+        )
