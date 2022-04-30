@@ -1,7 +1,7 @@
 from flask import session
 import requests
 
-from ..hipotap_common.models.auth import (
+from ..hipotap_common.exceptions import (
     InvalidCredentialsException,
     UserAlreadyExistsException,
 )

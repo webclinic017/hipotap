@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 
-# from hipotap_common.models.auth import UserAlreadyExistsException
 from ..session.auth import (
     login_user,
     logout_user,
