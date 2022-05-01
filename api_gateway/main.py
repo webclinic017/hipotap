@@ -3,7 +3,9 @@ import sys, time
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
+from hipotap_common.proto_messages.offer_pb2 import OfferListPB
 from rpc.customer_rpc_client import CustomerRpcClient
+from rpc.offer_rpc_client import OfferRpcClient
 from pydantic import BaseModel
 
 
@@ -71,3 +73,23 @@ async def register(
         return {"status": "OK"}
     else:
         raise HTTPException(status_code=401, detail="Email is taken")
+
+@app.get("/offers/")
+async def offers():
+    print(f"Got [GET]/offer/")
+    sys.stdout.flush()
+
+    offers_client = OfferRpcClient()
+    offer_list_pb = offers_client.get_offers()
+
+    #print("response", offer_list_pb)
+
+    offer_list = []
+    for offer_pb in offer_list_pb.offers:
+        offer_list.append({
+            'title': offer_pb.title
+        })
+
+    return {
+        'offers': offer_list
+    }

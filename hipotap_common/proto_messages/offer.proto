@@ -1,0 +1,14 @@
+syntax = "proto3";
+package offer;
+
+message OfferFilterPB {
+  repeated string list_of_destinations = 1;
+}
+
+message OfferPB {
+  string title = 1;
+}
+
+message OfferListPB {
+  repeated OfferPB offers = 1;
+}

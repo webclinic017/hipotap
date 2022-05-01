@@ -43,6 +43,23 @@ services:
     networks:
       - hipotap-net
 
+  offer:
+    extends:
+      file: offer_service/docker-compose.yml
+      service: offer
+    depends_on:
+      - broker
+      - offer_db
+    networks:
+      - hipotap-net
+
+  offer_db:
+    extends:
+      file: offer_service/docker-compose.yml
+      service: offer_db
+    networks:
+      - hipotap-net
+
 networks:
   hipotap-net:
     driver: bridge

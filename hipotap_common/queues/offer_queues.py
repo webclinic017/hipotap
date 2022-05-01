@@ -1,0 +1,1 @@
+OFFERS_QUEUE = 'offers'
