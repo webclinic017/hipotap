@@ -1,11 +1,8 @@
 import pika
-from hipotap_common.proto_messages.offer_pb2 import OfferListPB, OfferPB
+from hipotap_common.proto_messages.offer_pb2 import OfferListPB
 
 from .rpc_client import RpcClient
-from hipotap_common.queues.offer_queues import (
-    OFFERS_QUEUE
-)
-from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB
+from hipotap_common.queues.offer_queues import OFFER_LIST_QUEUE
 
 
 class OfferRpcClient(RpcClient):
@@ -15,7 +12,7 @@ class OfferRpcClient(RpcClient):
         # Send request
         self.channel.basic_publish(
             exchange="",
-            routing_key=OFFERS_QUEUE,
+            routing_key=OFFER_LIST_QUEUE,
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue, correlation_id=self.corr_id
             ),

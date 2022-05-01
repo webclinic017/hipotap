@@ -2,11 +2,10 @@ from sqlalchemy.orm.exc import NoResultFound
 import pika
 
 from hipotap_common.queues.offer_queues import (
-    OFFERS_QUEUE
+    OFFER_LIST_QUEUE
 )
 from hipotap_common.proto_messages.offer_pb2 import OfferListPB, OfferPB
-from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
-from customer_db.models import db_session, Offer_Table
+from offer_db.models import db_session, Offer_Table
 
 
 def boker_connection():
@@ -19,12 +18,12 @@ def broker_requests_handling_loop():
     connection = boker_connection()
     channel = connection.channel()
     # Declare queues
-    channel.queue_declare(queue=OFFERS_QUEUE)
+    channel.queue_declare(queue=OFFER_LIST_QUEUE)
 
     channel.basic_consume(
-        queue=OFFERS_QUEUE,
+        queue=OFFER_LIST_QUEUE,
         auto_ack=True,
-        on_message_callback=on_offers_request,
+        on_message_callback=on_offer_list_request,
     )
 
     # Start handling requests
@@ -32,10 +31,10 @@ def broker_requests_handling_loop():
     channel.start_consuming()
 
 
-def on_offers_request(ch, method, properties, body):
-    print(" [x] Offers requested")
+def on_offer_list_request(ch, method, properties, body):
+    print(" [x] Offer list requested")
 
-    offers_response_pb = OfferListPB()
+    offer_list_response_pb = OfferListPB()
 
     try:
         offers = (
@@ -45,7 +44,7 @@ def on_offers_request(ch, method, properties, body):
         for offer in offers:
             elem = OfferPB()
             elem.title = offer.title
-            offers_response_pb.offers.append(elem)
+            offer_list_response_pb.offers.append(elem)
 
     except NoResultFound:
         print("No offers in database")
@@ -55,5 +54,5 @@ def on_offers_request(ch, method, properties, body):
         "",
         routing_key=properties.reply_to,
         properties=pika.BasicProperties(correlation_id=properties.correlation_id),
-        body=offers_response_pb.SerializeToString(),
+        body=offer_list_response_pb.SerializeToString(),
     )

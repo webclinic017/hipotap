@@ -74,22 +74,17 @@ async def register(
     else:
         raise HTTPException(status_code=401, detail="Email is taken")
 
+
 @app.get("/offers/")
 async def offers():
     print(f"Got [GET]/offer/")
     sys.stdout.flush()
 
-    offers_client = OfferRpcClient()
-    offer_list_pb = offers_client.get_offers()
-
-    #print("response", offer_list_pb)
+    offer_client = OfferRpcClient()
+    offer_list_pb = offer_client.get_offers()
 
     offer_list = []
     for offer_pb in offer_list_pb.offers:
-        offer_list.append({
-            'title': offer_pb.title
-        })
+        offer_list.append({"title": offer_pb.title})
 
-    return {
-        'offers': offer_list
-    }
+    return {"offers": offer_list}

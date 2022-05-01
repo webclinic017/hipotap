@@ -6,16 +6,14 @@ from ..hipotap_common.api.endpoints import OFFERS_ENDPOINT
 
 def get_offers():
     """
-    Authenticate user
+    Get offer list
     """
-    # call to API Gateway for authentication
+    # call to API Gateway for getting offers
     response = requests.get(
         OFFERS_ENDPOINT, data=None
     )
 
-    return response.json()['offers']
-
     if response.status_code != 200:
         raise NotImplementedError
 
-    return response.json()
+    return response.json()['offers']

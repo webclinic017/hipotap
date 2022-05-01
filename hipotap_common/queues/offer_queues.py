@@ -1,1 +1,1 @@
-OFFERS_QUEUE = 'offers'
+OFFER_LIST_QUEUE = 'offer_list'

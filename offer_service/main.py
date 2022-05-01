@@ -4,7 +4,7 @@ from broker_comunication import broker_requests_handling_loop
 
 
 def main():
-    print("Customer SERIVCE STARTED")
+    print("Offer SERIVCE STARTED")
 
     time.sleep(5)
     broker_requests_handling_loop()
