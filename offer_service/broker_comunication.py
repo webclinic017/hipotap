@@ -5,17 +5,11 @@ from hipotap_common.queues.offer_queues import (
     OFFER_LIST_QUEUE
 )
 from hipotap_common.proto_messages.offer_pb2 import OfferListPB, OfferPB
+from hipotap_common.broker import connect_to_brocker
 from offer_db.models import db_session, Offer_Table
 
-
-def boker_connection():
-    credentials = pika.PlainCredentials("guest", "guest")
-    parameters = pika.ConnectionParameters("hipotap_broker", 5672, "/", credentials)
-    return pika.BlockingConnection(parameters)
-
-
 def broker_requests_handling_loop():
-    connection = boker_connection()
+    connection = connect_to_brocker()
     channel = connection.channel()
     # Declare queues
     channel.queue_declare(queue=OFFER_LIST_QUEUE)

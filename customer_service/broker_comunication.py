@@ -8,17 +8,12 @@ from hipotap_common.queues.customer_queues import (
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.auth_pb2 import AuthResponsePB, AuthStatus
 from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
+from hipotap_common.broker import connect_to_brocker
 from customer_db.models import db_session, Customer_Table
 
 
-def boker_connection():
-    credentials = pika.PlainCredentials("guest", "guest")
-    parameters = pika.ConnectionParameters("hipotap_broker", 5672, "/", credentials)
-    return pika.BlockingConnection(parameters)
-
-
 def broker_requests_handling_loop():
-    connection = boker_connection()
+    connection = connect_to_brocker()
     channel = connection.channel()
     # Declare queues
     channel.queue_declare(queue=CUSTOMER_AUTH_QUEUE)
