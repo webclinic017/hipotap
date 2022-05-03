@@ -5,9 +5,11 @@ from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
 from hipotap_common.proto_messages.offer_pb2 import OfferListPB
+from hipotap_common.proto_messages.order_pb2 import OrderRequestPB
 from rpc.customer_rpc_client import CustomerRpcClient
 from rpc.offer_rpc_client import OfferRpcClient
 from pydantic import BaseModel
+from hipotap_common.api.endpoints import ORDER_REQUEST_PATH
 
 
 CUSTOMER_AUTH_QUEUE = "customer_auth"
@@ -26,7 +28,7 @@ time.sleep(5)
 @app.post("/customer/authenticate/")
 async def authenticate(email: str = Form(...), password: str = Form(...)):
     print(
-        f"Got [POST]/customer/authenticate/ with databaseemail={email}&password={password}"
+        f"Got [POST]/customer/authenticate/ with email={email}&password={password}"
     )
     sys.stdout.flush()
 
@@ -85,3 +87,20 @@ async def offers():
     offer_list_pb = offer_client.get_offers()
 
     return json_format.MessageToDict(offer_list_pb)
+
+@app.post(ORDER_REQUEST_PATH)
+async def order_request(offer_id: int = Form(...), customer_email: str = Form(...), price: float = Form(...)):
+    from rpc.order_rpc_client import OrderRpcClient
+    order_client = OrderRpcClient()
+    order_request_pb =OrderRequestPB()
+    order_request_pb.offer_id = offer_id
+    order_request_pb.customer_email = customer_email
+    order_request_pb.price = price
+    order_response = order_client.order_request(order_request_pb)
+
+    if order_response.status == BaseStatus.OK:
+        print("Order OK")
+        sys.stdout.flush()
+        return {"status": "OK"}
+    else:
+        raise HTTPException(status_code=401, detail="Email is taken")

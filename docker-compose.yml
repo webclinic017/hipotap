@@ -60,6 +60,23 @@ services:
     networks:
       - hipotap-net
 
+  order:
+    extends:
+      file: order_service/docker-compose.yml
+      service: order
+    depends_on:
+      - broker
+      - order_db
+    networks:
+      - hipotap-net
+
+  order_db:
+    extends:
+      file: order_service/docker-compose.yml
+      service: order_db
+    networks:
+      - hipotap-net
+
 networks:
   hipotap-net:
     driver: bridge

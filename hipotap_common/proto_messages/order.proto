@@ -1,0 +1,8 @@
+syntax = "proto3";
+package order;
+
+message OrderRequestPB {
+  string customer_email = 1;
+  int32 offer_id = 2;
+  float price = 3;
+}

@@ -1,6 +1,5 @@
-import pika
 import uuid
-
+from hipotap_common.broker import connect_to_brocker
 
 class RpcInProgressException(Exception):
     pass
@@ -17,9 +16,7 @@ class RpcClient:
         if self.connection is not None and self.connection.is_open():
             return
 
-        credentials = pika.PlainCredentials("guest", "guest")
-        parameters = pika.ConnectionParameters("hipotap_broker", 5672, "/", credentials)
-        self.connection = pika.BlockingConnection(parameters)
+        self.connection = connect_to_brocker()
 
     def _open_channel(self):
         if self.channel is not None and self.channel.is_open:

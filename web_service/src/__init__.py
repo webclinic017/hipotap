@@ -20,4 +20,7 @@ def create_app():
 
     app.register_blueprint(offers_blueprint)
 
+    from .blue_prints.orders import orders as orders_blueprint
+    app.register_blueprint(orders_blueprint)
+
     return app

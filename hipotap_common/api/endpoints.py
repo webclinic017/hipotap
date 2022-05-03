@@ -1,4 +1,6 @@
-API_GATEWAY_URL = "http://hipotap_api_gateway:8000"
-AUTHENTICATE_ENDPOINT = f"{API_GATEWAY_URL}/customer/authenticate/"
-REGISTER_ENDPOINT = f"{API_GATEWAY_URL}/customer/register/"
-OFFERS_ENDPOINT = f"{API_GATEWAY_URL}/offers/"
+API_GATEWAY_URL = 'http://hipotap_api_gateway:8000'
+AUTHENTICATE_ENDPOINT = f'{API_GATEWAY_URL}/customer/authenticate/'
+REGISTER_ENDPOINT = f'{API_GATEWAY_URL}/customer/register/'
+OFFERS_ENDPOINT = f'{API_GATEWAY_URL}/offers/'
+ORDER_REQUEST_PATH = '/order/order_offer/'
+ORDER_REQUEST_ENDPOINT = API_GATEWAY_URL+ORDER_REQUEST_PATH
