@@ -53,4 +53,5 @@ class RpcClient:
         self.call_in_progress = True
 
     def __del__(self):
+        self.channel.close()
         self.connection.close()

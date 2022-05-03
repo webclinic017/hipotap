@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Form
+from google.protobuf import json_format
 import sys, time
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
@@ -77,14 +78,10 @@ async def register(
 
 @app.get("/offers/")
 async def offers():
-    print(f"Got [GET]/offer/")
+    print(f"Got [GET]/offers/")
     sys.stdout.flush()
 
     offer_client = OfferRpcClient()
     offer_list_pb = offer_client.get_offers()
 
-    offer_list = []
-    for offer_pb in offer_list_pb.offers:
-        offer_list.append({"title": offer_pb.title})
-
-    return {"offers": offer_list}
+    return json_format.MessageToDict(offer_list_pb)

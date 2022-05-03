@@ -4,7 +4,7 @@ import requests
 from ..hipotap_common.api.endpoints import OFFERS_ENDPOINT
 
 
-def get_offers():
+def get_offer_list():
     """
     Get offer list
     """

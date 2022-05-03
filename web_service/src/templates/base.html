@@ -26,6 +26,9 @@
                             <a href="{{ url_for('main.index') }}" class="button is-primary">
                                 Home
                             </a>
+                            <a href="{{ url_for('offers.get_offers') }}" class="button is-primary">
+                                Offers
+                            </a>
                             {% if session['authenticated'] %}
                             <a href="{{ url_for('main.profile') }}" class="button is-primary">
                                 Profile

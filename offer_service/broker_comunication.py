@@ -37,6 +37,7 @@ def on_offer_list_request(ch, method, properties, body):
 
         for offer in offers:
             elem = OfferPB()
+            elem.id = offer.id
             elem.title = offer.title
             offer_list_response_pb.offers.append(elem)
 

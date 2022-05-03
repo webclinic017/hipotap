@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='offer',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0boffer.proto\x12\x05offer\"-\n\rOfferFilterPB\x12\x1c\n\x14list_of_destinations\x18\x01 \x03(\t\"\x18\n\x07OfferPB\x12\r\n\x05title\x18\x01 \x01(\t\"-\n\x0bOfferListPB\x12\x1e\n\x06offers\x18\x01 \x03(\x0b\x32\x0e.offer.OfferPBb\x06proto3')
+  serialized_pb=_b('\n\x0boffer.proto\x12\x05offer\"-\n\rOfferFilterPB\x12\x1c\n\x14list_of_destinations\x18\x01 \x03(\t\"$\n\x07OfferPB\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05title\x18\x02 \x01(\t\"-\n\x0bOfferListPB\x12\x1e\n\x06offers\x18\x01 \x03(\x0b\x32\x0e.offer.OfferPBb\x06proto3')
 )
 
 
@@ -64,8 +64,15 @@ _OFFERPB = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='title', full_name='offer.OfferPB.title', index=0,
-      number=1, type=9, cpp_type=9, label=1,
+      name='id', full_name='offer.OfferPB.id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='title', full_name='offer.OfferPB.title', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -83,7 +90,7 @@ _OFFERPB = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=69,
-  serialized_end=93,
+  serialized_end=105,
 )
 
 
@@ -113,8 +120,8 @@ _OFFERLISTPB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=95,
-  serialized_end=140,
+  serialized_start=107,
+  serialized_end=152,
 )
 
 _OFFERLISTPB.fields_by_name['offers'].message_type = _OFFERPB

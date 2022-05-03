@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, create_engine
+from sqlalchemy import Column, String, Integer, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -10,7 +10,8 @@ DBModel = declarative_base()
 
 class Offer_Table(DBModel):
     __tablename__ = "offer"
-    title = Column(String(100), primary_key=True)
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100))
 
 
 DBModel.metadata.drop_all(engine)

@@ -6,7 +6,8 @@ message OfferFilterPB {
 }
 
 message OfferPB {
-  string title = 1;
+  int32 id = 1;
+  string title = 2;
 }
 
 message OfferListPB {

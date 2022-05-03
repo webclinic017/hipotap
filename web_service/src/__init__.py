@@ -16,4 +16,8 @@ def create_app():
 
     app.register_blueprint(main_blueprint)
 
+    from .blue_prints.offers import offers as offers_blueprint
+
+    app.register_blueprint(offers_blueprint)
+
     return app
