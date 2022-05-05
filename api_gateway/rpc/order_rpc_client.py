@@ -1,7 +1,8 @@
 import pika
 from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB
-from .rpc_client import RpcClient
 from hipotap_common.queues.order_queues import ORDER_REQUEST_QUEUE
+
+from .rpc_client import RpcClient
 
 
 class OrderRpcClient(RpcClient):

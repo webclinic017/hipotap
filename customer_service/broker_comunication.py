@@ -1,38 +1,23 @@
-from sqlalchemy.orm.exc import NoResultFound
 import pika
-
+from hipotap_common.broker import connect_to_brocker
+from hipotap_common.proto_messages.auth_pb2 import AuthResponsePB, AuthStatus
+from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
+from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
 from hipotap_common.queues.customer_queues import (
     CUSTOMER_AUTH_QUEUE,
     CUSTOMER_REGISTER_QUEUE,
 )
-from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
-from hipotap_common.proto_messages.auth_pb2 import AuthResponsePB, AuthStatus
-from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
-from hipotap_common.broker import connect_to_brocker
-from customer_db.models import db_session, Customer_Table
+from hipotap_common.rpc.rpc_subscriber import RpcSubscriber
+from sqlalchemy.orm.exc import NoResultFound
+
+from customer_db.models import Customer_Table, db_session
 
 
 def broker_requests_handling_loop():
-    connection = connect_to_brocker()
-    channel = connection.channel()
-    # Declare queues
-    channel.queue_declare(queue=CUSTOMER_AUTH_QUEUE)
-    channel.queue_declare(queue=CUSTOMER_REGISTER_QUEUE)
-
-    # Subscribe to queues
-    channel.basic_consume(
-        queue=CUSTOMER_AUTH_QUEUE, auto_ack=True, on_message_callback=on_auth_request
-    )
-
-    channel.basic_consume(
-        queue=CUSTOMER_REGISTER_QUEUE,
-        auto_ack=True,
-        on_message_callback=on_register_request,
-    )
-
-    # Start handling requests
-    print(" [*] Waiting for messages. To exit press CTRL+C")
-    channel.start_consuming()
+    subscriber = RpcSubscriber()
+    subscriber.subscribe_to_queue(CUSTOMER_AUTH_QUEUE, on_auth_request)
+    subscriber.subscribe_to_queue(CUSTOMER_REGISTER_QUEUE, on_register_request)
+    subscriber.handling_loop()
 
 
 def on_auth_request(ch, method, properties, body):

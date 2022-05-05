@@ -1,10 +1,8 @@
-from sqlalchemy import Column, Integer, String, Float, create_engine
+from sqlalchemy import Column, Float, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine(
-    "postgresql://hipotap:hipotap@hipotap_order_db:5432/order_db"
-)
+engine = create_engine("postgresql://hipotap:hipotap@hipotap_order_db:5432/order_db")
 DBModel = declarative_base()
 
 

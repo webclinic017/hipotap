@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-import os, sys, time
+import os
+import sys
+
 from broker_comunication import broker_requests_handling_loop
 
 
