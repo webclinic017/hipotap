@@ -18,6 +18,10 @@ def get_order(order_id):
 
 @orders.post("/order/order_offer/<offer_id>")
 def post_order_offer(offer_id):
+    if not ('authenticated' in session and session['authenticated']):
+        flash("You must be logged in to order offers")
+        return redirect(url_for("offers.get_offers"))
+
     try:
         order_request(offer_id)
         flash("Order request sent", "is-success")
