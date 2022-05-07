@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  hipotap_db:
+    container_name: hipotap_db
+    hostname: hipotap_db
+    image: postgres:12.10
+    environment:
+      - POSTGRES_USER=hipotap
+      - POSTGRES_PASSWORD=hipotap
+      - POSTGRES_DB=hipotap_db

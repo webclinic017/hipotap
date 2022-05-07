@@ -3,12 +3,15 @@ import os
 import sys
 
 from broker_comunication import broker_requests_handling_loop
-
+from hipotap_common.db.admin import init_db
 
 def main():
+    print("Initializing database")
+
+    init_db()
+
     print("Customer SERIVCE STARTED")
 
-    # time.sleep(5)
     broker_requests_handling_loop()
 
 
