@@ -3,7 +3,7 @@ from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB, BaseStatus
 from hipotap_common.queues.order_queues import ORDER_REQUEST_QUEUE
 from hipotap_common.rpc.rpc_subscriber import RpcSubscriber
 
-from order_db.models import Order_Table, db_session
+from hipotap_common.db import Order_Table, db_session
 
 
 def broker_requests_handling_loop():

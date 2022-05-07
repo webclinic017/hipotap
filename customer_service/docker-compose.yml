@@ -6,11 +6,3 @@ services:
     build:
       context: ..
       dockerfile: customer_service/Dockerfile
-  customer_db:
-    container_name: hipotap_customer_db
-    hostname: hipotap_customer_db
-    image: postgres:12.10
-    environment:
-      - POSTGRES_USER=hipotap
-      - POSTGRES_PASSWORD=hipotap
-      - POSTGRES_DB=customer_db

@@ -5,7 +5,7 @@ from hipotap_common.queues.offer_queues import OFFER_LIST_QUEUE
 from hipotap_common.rpc.rpc_subscriber import RpcSubscriber
 from sqlalchemy.orm.exc import NoResultFound
 
-from offer_db.models import Offer_Table, db_session
+from hipotap_common.db import Offer_Table, db_session
 
 
 def broker_requests_handling_loop():

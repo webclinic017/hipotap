@@ -32,14 +32,7 @@ services:
       service: customer
     depends_on:
       - broker
-      - customer_db
-    networks:
-      - hipotap-net
-
-  customer_db:
-    extends:
-      file: customer_service/docker-compose.yml
-      service: customer_db
+      - hipotap_db
     networks:
       - hipotap-net
 
@@ -49,14 +42,7 @@ services:
       service: offer
     depends_on:
       - broker
-      - offer_db
-    networks:
-      - hipotap-net
-
-  offer_db:
-    extends:
-      file: offer_service/docker-compose.yml
-      service: offer_db
+      - hipotap_db
     networks:
       - hipotap-net
 
@@ -66,14 +52,14 @@ services:
       service: order
     depends_on:
       - broker
-      - order_db
+      - hipotap_db
     networks:
       - hipotap-net
 
-  order_db:
+  hipotap_db:
     extends:
-      file: order_service/docker-compose.yml
-      service: order_db
+      file: hipotap_db/docker-compose.yml
+      service: hipotap_db
     networks:
       - hipotap-net
 
