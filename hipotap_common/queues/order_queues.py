@@ -1,1 +1,2 @@
-ORDER_REQUEST_QUEUE = 'offer_request'
+ORDER_REQUEST_QUEUE = 'order_request'
+ORDER_LIST_QUEUE = 'orders_list'
