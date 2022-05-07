@@ -30,6 +30,9 @@
                                 Offers
                             </a>
                             {% if session['authenticated'] %}
+                            <a href="{{ url_for('orders.get_customer_orders') }}" class="button is-primary">
+                                Orders
+                            </a>
                             <a href="{{ url_for('main.profile') }}" class="button is-primary">
                                 Profile
                             </a>

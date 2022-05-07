@@ -3,12 +3,12 @@ import time
 
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
-from hipotap_common.api.endpoints import ORDER_REQUEST_PATH
+from hipotap_common.api.endpoints import ORDER_REQUEST_PATH, ORDER_LIST_PATH
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
 from hipotap_common.proto_messages.offer_pb2 import OfferListPB
-from hipotap_common.proto_messages.order_pb2 import OrderRequestPB
+from hipotap_common.proto_messages.order_pb2 import OrderRequestPB, OrderListRequestPB
 from pydantic import BaseModel
 
 from rpc.customer_rpc_client import CustomerRpcClient
@@ -86,7 +86,11 @@ async def offers():
     offer_client = OfferRpcClient()
     offer_list_pb = offer_client.get_offers()
 
-    return json_format.MessageToDict(offer_list_pb)
+    return json_format.MessageToDict(
+        offer_list_pb,
+        preserving_proto_field_name=True,
+        including_default_value_fields=True,
+    )
 
 
 @app.post(ORDER_REQUEST_PATH)
@@ -103,8 +107,22 @@ async def order_request(
     order_response = order_client.order_request(order_request_pb)
 
     if order_response.status == BaseStatus.OK:
-        print("Order OK")
-        sys.stdout.flush()
+        print("Order OK",flush=True)
         return {"status": "OK"}
     else:
         raise HTTPException(status_code=401, detail="Email is taken")
+
+
+@app.get(ORDER_LIST_PATH)
+async def order_list_request(customer_email: str = Form(...)):
+    from rpc.order_rpc_client import OrderRpcClient
+
+    order_client = OrderRpcClient()
+    order_list_request_pb = OrderListRequestPB()
+    order_list_request_pb.customer_email = customer_email
+    order_list_pb = order_client.get_order_list(order_list_request_pb)
+    return json_format.MessageToDict(
+        order_list_pb,
+        preserving_proto_field_name=True,
+        including_default_value_fields=True,
+    )
