@@ -11,6 +11,7 @@
             <th>Number of children</th>
             <th>price</th>
             <th>Date of purchase</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,11 @@
             <td>{{ order.children_count }}</td>
             <td>{{ order.price }}</td>
             <td>{{ order.creation_time }}</td>
+            <td>
+                <a href="{{ url_for('offers.get_offer', offer_id=order.offer_id) }}" class="button is-primary">
+                    View offer
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
