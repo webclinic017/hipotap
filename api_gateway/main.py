@@ -3,17 +3,26 @@ import time
 
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
-from hipotap_common.api.endpoints import ORDER_RESERVE_REQUEST_PATH, ORDER_LIST_PATH, OFFER_PATH
+from hipotap_common.api.endpoints import (
+    ORDER_PAYMENT_PATH,
+    ORDER_RESERVE_REQUEST_PATH,
+    ORDER_LIST_PATH,
+    OFFER_PATH,
+)
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
-from hipotap_common.proto_messages.offer_pb2 import OfferListPB
-from hipotap_common.proto_messages.order_pb2 import OrderRequestPB, OrderListRequestPB
+from hipotap_common.proto_messages.order_pb2 import (
+    OrderPaymentRequestPB,
+    OrderRequestPB,
+    OrderListRequestPB,
+)
 from pydantic import BaseModel
 
 from hipotap_common.rpc.clients.customer_rpc_client import CustomerRpcClient
 from hipotap_common.rpc.clients.offer_rpc_client import OfferRpcClient
 from hipotap_common.rpc.clients.order_rpc_client import OrderRpcClient
+
 CUSTOMER_AUTH_QUEUE = "customer_auth"
 
 
@@ -93,9 +102,7 @@ async def offers():
 
 
 @app.get(OFFER_PATH)
-async def offers(
-    offer_id: int = Form(...)
-):
+async def offers(offer_id: int = Form(...)):
     print(f"Got [GET]/offer/ with offer_id={offer_id}", flush=True)
 
     offer_client = OfferRpcClient()
@@ -113,7 +120,7 @@ async def order_reserve_request(
     offer_id: int = Form(...),
     customer_email: str = Form(...),
     adult_count: int = Form(...),
-    children_count: int = Form(...)
+    children_count: int = Form(...),
 ):
 
     order_client = OrderRpcClient()
@@ -125,7 +132,7 @@ async def order_reserve_request(
     order_response = order_client.order_reserve_request(order_request_pb)
 
     if order_response.status == BaseStatus.OK:
-        print("Order OK",flush=True)
+        print("Order OK", flush=True)
         return {"status": "OK"}
     else:
         raise HTTPException(status_code=401, detail="Cannot order offer")
@@ -143,3 +150,23 @@ async def order_list_request(customer_email: str = Form(...)):
         preserving_proto_field_name=True,
         including_default_value_fields=True,
     )
+
+
+@app.post(ORDER_PAYMENT_PATH)
+async def order_payment_request(
+    order_id: int = Form(...),
+    card_number: str = Form(...),
+):
+
+    order_client = OrderRpcClient()
+    order_paymet_request_pb = OrderPaymentRequestPB()
+    order_paymet_request_pb.order_id = order_id
+    order_paymet_request_pb.card_number = card_number
+
+    payment_response = order_client.order_payment_request(order_paymet_request_pb)
+
+    if payment_response.status == BaseStatus.OK:
+        print("Payment OK", flush=True)
+        return {"status": "OK"}
+    else:
+        raise HTTPException(status_code=401, detail="Cannot pay order")

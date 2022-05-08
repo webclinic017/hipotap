@@ -62,6 +62,7 @@ def post_order_payment(order_id):
         # data not validated
         order_payment(order_id, card_number)
         flash("Order paid", "is-success")
-    except:
+    except Exception as e:
+        print(f"Order payment failed {e}", flush=True)
         flash("Payment failed", "is-danger")
     return redirect(url_for("orders.get_customer_orders"))

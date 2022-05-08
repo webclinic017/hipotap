@@ -27,9 +27,13 @@
                 <a href="{{ url_for('offers.get_offer', offer_id=order.offer_id) }}" class="button is-primary">
                     View offer
                 </a>
+            {% if order.payment_status == 'PAID' %}
+                Order paid
+            {% else %}
                 <a href="{{ url_for('orders.get_order_payment', order_id=order.id) }}" class="button is-primary">
                     Payment
                 </a>
+            {% endif %}
             </td>
         </tr>
         {% endfor %}

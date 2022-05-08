@@ -19,6 +19,7 @@ message OrderPB {
   int32 children_count = 5;
   float price = 6;
   google.protobuf.Timestamp creation_time = 7;
+  string payment_status = 8;
 }
 
 message OrderListRequestPB {
@@ -27,4 +28,9 @@ message OrderListRequestPB {
 
 message OrderListPB {
   repeated OrderPB orders = 1;
+}
+
+message OrderPaymentRequestPB {
+  int32 order_id = 1;
+  string card_number = 2;
 }

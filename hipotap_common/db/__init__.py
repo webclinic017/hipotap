@@ -65,15 +65,18 @@ class Order_Table(DBModel):
     children_count = Column(Integer)
     price = Column(Float)
     creation_time = Column(DateTime, server_default=func.now())
+    payment_status = Column(String(100))
 
     def to_pb(self) -> OrderPB:
         order_pb = OrderPB()
+        order_pb.id = self.id
         order_pb.offer_id = self.offer_id
         order_pb.customer_id = self.customer_id
         order_pb.adult_count = self.adult_count
         order_pb.children_count = self.children_count
         order_pb.price = self.price
         order_pb.creation_time.FromDatetime(self.creation_time)
+        order_pb.payment_status = self.payment_status
         return order_pb
 
     def to_any(self)  -> Any:

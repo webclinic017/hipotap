@@ -48,6 +48,7 @@ class OrderSaga(Saga):
                 adult_count=self.order_request_pb.adult_count,
                 children_count=self.order_request_pb.children_count,
                 price=price,
+                payment_status="PENDING",
             )
             db_session.add(order)
             db_session.commit()
