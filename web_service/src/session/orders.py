@@ -21,7 +21,7 @@ def get_order_list():
     return response.json()["orders"]
 
 
-def order_request(offer_id: int):
+def order_request(offer_id: int, adult_count: int, children_count: int):
     """
     Request order offer
     """
@@ -30,10 +30,9 @@ def order_request(offer_id: int):
         ORDER_REQUEST_ENDPOINT,
         data={"offer_id": offer_id,
               "customer_email": session["email"],
-              "price": 0
+              "adult_count": adult_count,
+              "children_count": children_count
         })
 
     if response.status_code != 200:
         raise NotImplementedError
-
-    # return response.json()["offers"]

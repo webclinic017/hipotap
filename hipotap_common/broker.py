@@ -2,7 +2,7 @@ import pika
 import time
 
 
-MAX_CONNECTION_ATTEMPTS = 20
+MAX_CONNECTION_ATTEMPTS = 100
 
 
 def connect_to_brocker():
