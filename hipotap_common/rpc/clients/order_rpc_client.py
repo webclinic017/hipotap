@@ -1,19 +1,19 @@
 import pika
 from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB
 from hipotap_common.proto_messages.order_pb2 import OrderListPB
-from hipotap_common.queues.order_queues import ORDER_REQUEST_QUEUE, ORDER_LIST_QUEUE
+from hipotap_common.queues.order_queues import ORDER_RESERVE_REQUEST_QUEUE, ORDER_LIST_QUEUE
 
 from .rpc_client import RpcClient
 
 
 class OrderRpcClient(RpcClient):
-    def order_request(self, order_request_pb) -> BaseResponsePB:
+    def order_reserve_request(self, order_request_pb) -> BaseResponsePB:
         self.init_callback()
 
         # Send request
         self.channel.basic_publish(
             exchange="",
-            routing_key=ORDER_REQUEST_QUEUE,
+            routing_key=ORDER_RESERVE_REQUEST_QUEUE,
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue, correlation_id=self.corr_id
             ),

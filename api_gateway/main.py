@@ -3,7 +3,7 @@ import time
 
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
-from hipotap_common.api.endpoints import ORDER_REQUEST_PATH, ORDER_LIST_PATH, OFFER_PATH
+from hipotap_common.api.endpoints import ORDER_RESERVE_REQUEST_PATH, ORDER_LIST_PATH, OFFER_PATH
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
@@ -108,8 +108,8 @@ async def offers(
     )
 
 
-@app.post(ORDER_REQUEST_PATH)
-async def order_request(
+@app.post(ORDER_RESERVE_REQUEST_PATH)
+async def order_reserve_request(
     offer_id: int = Form(...),
     customer_email: str = Form(...),
     adult_count: int = Form(...),
@@ -122,7 +122,7 @@ async def order_request(
     order_request_pb.customer_email = customer_email
     order_request_pb.adult_count = adult_count
     order_request_pb.children_count = children_count
-    order_response = order_client.order_request(order_request_pb)
+    order_response = order_client.order_reserve_request(order_request_pb)
 
     if order_response.status == BaseStatus.OK:
         print("Order OK",flush=True)

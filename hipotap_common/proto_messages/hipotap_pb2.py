@@ -13,6 +13,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,8 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='hipotap',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rhipotap.proto\x12\x07hipotap\"F\n\x0e\x42\x61seResponsePB\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.hipotap.BaseStatus\x12\x0f\n\x07message\x18\x02 \x01(\t*\x1e\n\nBaseStatus\x12\x06\n\x02OK\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x62\x06proto3')
-)
+  serialized_pb=_b('\n\rhipotap.proto\x12\x07hipotap\x1a\x19google/protobuf/any.proto\"\\\n\x0e\x42\x61seResponsePB\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.hipotap.BaseStatus\x12%\n\x07message\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any*\x1e\n\nBaseStatus\x12\x06\n\x02OK\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x62\x06proto3')
+  ,
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
 _BASESTATUS = _descriptor.EnumDescriptor(
   name='BaseStatus',
@@ -40,8 +42,8 @@ _BASESTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=98,
-  serialized_end=128,
+  serialized_start=147,
+  serialized_end=177,
 )
 _sym_db.RegisterEnumDescriptor(_BASESTATUS)
 
@@ -67,8 +69,8 @@ _BASERESPONSEPB = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='message', full_name='hipotap.BaseResponsePB.message', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -84,11 +86,12 @@ _BASERESPONSEPB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26,
-  serialized_end=96,
+  serialized_start=53,
+  serialized_end=145,
 )
 
 _BASERESPONSEPB.fields_by_name['status'].enum_type = _BASESTATUS
+_BASERESPONSEPB.fields_by_name['message'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['BaseResponsePB'] = _BASERESPONSEPB
 DESCRIPTOR.enum_types_by_name['BaseStatus'] = _BASESTATUS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
