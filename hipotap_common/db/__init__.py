@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-from google.protobuf.timestamp_pb2 import Timestamp
+from google.protobuf.any_pb2 import Any
 
 from ..proto_messages.offer_pb2 import OfferPB
 from ..proto_messages.order_pb2 import OrderPB
@@ -51,6 +51,10 @@ class Offer_Table(DBModel):
         offer_pb.date_end.FromDatetime(self.date_end)
         return offer_pb
 
+    def to_any(self)  -> Any:
+        any = Any()
+        any.Pack(self.to_pb())
+        return any
 
 class Order_Table(DBModel):
     __tablename__ = "order"
@@ -71,6 +75,11 @@ class Order_Table(DBModel):
         order_pb.price = self.price
         order_pb.creation_time.FromDatetime(self.creation_time)
         return order_pb
+
+    def to_any(self)  -> Any:
+        any = Any()
+        any.Pack(self.to_pb())
+        return any
 
 
 db_session = sessionmaker(bind=engine)()

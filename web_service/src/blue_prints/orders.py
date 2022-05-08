@@ -39,10 +39,9 @@ def post_order_offer(offer_id):
     try:
         # data not validated
         order_request(offer_id, adult_count, children_count)
-
-        flash("Order request sent", "is-success")
+        flash("Order reserved", "is-success")
     except:
-        flash("Order failed", "is-danger")
+        flash("Order reservation failed", "is-danger")
     return redirect(url_for("orders.get_customer_orders"))
 
 
