@@ -11,9 +11,9 @@ from hipotap_common.proto_messages.offer_pb2 import OfferListPB
 from hipotap_common.proto_messages.order_pb2 import OrderRequestPB, OrderListRequestPB
 from pydantic import BaseModel
 
-from rpc.customer_rpc_client import CustomerRpcClient
-from rpc.offer_rpc_client import OfferRpcClient
-
+from hipotap_common.rpc.clients.customer_rpc_client import CustomerRpcClient
+from hipotap_common.rpc.clients.offer_rpc_client import OfferRpcClient
+from hipotap_common.rpc.clients.order_rpc_client import OrderRpcClient
 CUSTOMER_AUTH_QUEUE = "customer_auth"
 
 
@@ -115,7 +115,6 @@ async def order_request(
     adult_count: int = Form(...),
     children_count: int = Form(...)
 ):
-    from rpc.order_rpc_client import OrderRpcClient
 
     order_client = OrderRpcClient()
     order_request_pb = OrderRequestPB()
@@ -134,7 +133,6 @@ async def order_request(
 
 @app.get(ORDER_LIST_PATH)
 async def order_list_request(customer_email: str = Form(...)):
-    from rpc.order_rpc_client import OrderRpcClient
 
     order_client = OrderRpcClient()
     order_list_request_pb = OrderListRequestPB()
