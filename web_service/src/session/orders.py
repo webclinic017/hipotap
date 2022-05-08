@@ -36,3 +36,12 @@ def order_request(offer_id: int, adult_count: int, children_count: int):
 
     if response.status_code != 200:
         raise NotImplementedError
+
+
+def order_payment(order_id: int, card_number):
+    """
+    Request order offer
+    """
+    # call to API Gateway for getting offers
+    # TODO
+    raise NotImplementedError

@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, session, url_for, request
 
-from ..session.orders import order_request, get_order_list
+from ..session.orders import order_request, get_order_list, order_payment
 
 orders = Blueprint("orders", __name__)
 
@@ -43,4 +43,26 @@ def post_order_offer(offer_id):
         flash("Order request sent", "is-success")
     except:
         flash("Order failed", "is-danger")
+    return redirect(url_for("orders.get_customer_orders"))
+
+
+@orders.get("/order/payment/<order_id>")
+def get_order_payment(order_id):
+    return render_template("order_payment.html", order_id=order_id)
+
+
+@orders.post("/order/payment/<order_id>")
+def post_order_payment(order_id):
+    card_number = request.form['card_number']
+
+    if not ("authenticated" in session and session["authenticated"]):
+        flash("You must be logged in to pay for order", "is-danger")
+        return redirect(url_for("offers.get_offers"))
+
+    try:
+        # data not validated
+        order_payment(order_id, card_number)
+        flash("Order paid", "is-success")
+    except:
+        flash("Payment failed", "is-danger")
     return redirect(url_for("orders.get_customer_orders"))
