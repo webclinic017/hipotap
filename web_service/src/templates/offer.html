@@ -36,6 +36,7 @@
     </tbody>
 </table>
 
+{% if session['authenticated'] %}
 <form action="{{ url_for('orders.post_order_offer', offer_id=offer.id) }}" method="post">
     <label for="adult_count">Adult count:</label>
     <input type="number" id="adult_count" name="adult_count" min="0" max="{{ offer.max_adult_count }}" value="0">
@@ -45,4 +46,6 @@
 
     <button type="submit" class="button is-secondary">Purchase</button>
 </form>
+{% endif %}
+
 {% endblock %}

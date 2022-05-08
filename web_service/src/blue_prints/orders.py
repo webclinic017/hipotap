@@ -29,14 +29,14 @@ def get_order(order_id):
 
 @orders.post("/order/order_offer/<offer_id>")
 def post_order_offer(offer_id):
+    adult_count = int(request.form['adult_count'])
+    children_count = int(request.form['children_count'])
+
     if not ("authenticated" in session and session["authenticated"]):
         flash("You must be logged in to order offers", "is-danger")
         return redirect(url_for("offers.get_offers"))
 
     try:
-        adult_count = int(request.form['adult_count'])
-        children_count = int(request.form['children_count'])
-
         # data not validated
         order_request(offer_id, adult_count, children_count)
 
