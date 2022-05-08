@@ -3,7 +3,7 @@ import time
 
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
-from hipotap_common.api.endpoints import ORDER_REQUEST_PATH, ORDER_LIST_PATH
+from hipotap_common.api.endpoints import ORDER_REQUEST_PATH, ORDER_LIST_PATH, OFFER_PATH
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
@@ -80,8 +80,7 @@ async def register(
 
 @app.get("/offers/")
 async def offers():
-    print(f"Got [GET]/offers/")
-    sys.stdout.flush()
+    print(f"Got [GET]/offers/", flush=True)
 
     offer_client = OfferRpcClient()
     offer_list_pb = offer_client.get_offers()
@@ -93,9 +92,28 @@ async def offers():
     )
 
 
+@app.get(OFFER_PATH)
+async def offers(
+    offer_id: int = Form(...)
+):
+    print(f"Got [GET]/offer/ with offer_id={offer_id}", flush=True)
+
+    offer_client = OfferRpcClient()
+    offer_pb = offer_client.get_offer(offer_id)
+
+    return json_format.MessageToDict(
+        offer_pb,
+        preserving_proto_field_name=True,
+        including_default_value_fields=True,
+    )
+
+
 @app.post(ORDER_REQUEST_PATH)
 async def order_request(
-    offer_id: int = Form(...), customer_email: str = Form(...), price: float = Form(...)
+    offer_id: int = Form(...),
+    customer_email: str = Form(...),
+    adult_count: int = Form(...),
+    children_count: int = Form(...)
 ):
     from rpc.order_rpc_client import OrderRpcClient
 
@@ -103,14 +121,15 @@ async def order_request(
     order_request_pb = OrderRequestPB()
     order_request_pb.offer_id = offer_id
     order_request_pb.customer_email = customer_email
-    order_request_pb.price = price
+    order_request_pb.adult_count = adult_count
+    order_request_pb.children_count = children_count
     order_response = order_client.order_request(order_request_pb)
 
     if order_response.status == BaseStatus.OK:
         print("Order OK",flush=True)
         return {"status": "OK"}
     else:
-        raise HTTPException(status_code=401, detail="Email is taken")
+        raise HTTPException(status_code=401, detail="Cannot order offer")
 
 
 @app.get(ORDER_LIST_PATH)

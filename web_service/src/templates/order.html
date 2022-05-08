@@ -10,20 +10,16 @@
             <th>Number of adults</th>
             <th>Number of children</th>
             <th>price</th>
-            <th>Date of purchase</th>
         </tr>
     </thead>
     <tbody>
-        {% for order in orders %}
         <tr>
             <td>{{ order.id }}</td>
             <td>{{ order.offer_id }}</td>
-            <td>{{ order.adult_count }}</td>
-            <td>{{ order.children_count }}</td>
+            <td>{{ order.number_of_adults }}</td>
+            <td>{{ order.number_of_children }}</td>
             <td>{{ order.price }}</td>
-            <td>{{ order.creation_time }}</td>
         </tr>
-        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

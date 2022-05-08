@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, session, url_for
+from flask import Blueprint, flash, redirect, render_template, session, url_for, request
 
 from ..session.orders import order_request, get_order_list
 
@@ -34,7 +34,12 @@ def post_order_offer(offer_id):
         return redirect(url_for("offers.get_offers"))
 
     try:
-        order_request(offer_id)
+        adult_count = int(request.form['adult_count'])
+        children_count = int(request.form['children_count'])
+
+        # data not validated
+        order_request(offer_id, adult_count, children_count)
+
         flash("Order request sent", "is-success")
     except:
         flash("Order failed", "is-danger")
