@@ -1,8 +1,9 @@
 import pika
+from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB
 from hipotap_common.proto_messages.offer_pb2 import OfferListPB, OfferRequestPB, OfferPB
 
 from .rpc_client import RpcClient
-from hipotap_common.queues.offer_queues import OFFER_LIST_QUEUE, OFFER_QUEUE
+from hipotap_common.queues.offer_queues import OFFER_LIST_QUEUE, OFFER_QUEUE, VALIDATE_ORDER_QUEUE
 
 
 class OfferRpcClient(RpcClient):
@@ -50,3 +51,23 @@ class OfferRpcClient(RpcClient):
         offer_pb = OfferPB()
         offer_pb.ParseFromString(self.response)
         return offer_pb
+
+    def validate_order(self, order_request_pb) -> BaseResponsePB:
+        self.init_callback()
+
+        self.channel.basic_publish(
+            exchange="",
+            routing_key=VALIDATE_ORDER_QUEUE,
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue, correlation_id=self.corr_id
+            ),
+            body=order_request_pb.SerializeToString()
+        )
+
+        # Wait for response
+        while self.response is None:
+            self.connection.process_data_events()
+
+        response_pb = BaseResponsePB()
+        response_pb.ParseFromString(self.response)
+        return response_pb
