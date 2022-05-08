@@ -1,7 +1,7 @@
 from flask import session
 import requests
 
-from ..hipotap_common.api.endpoints import ORDER_REQUEST_ENDPOINT, ORDER_LIST_ENDPOINT
+from ..hipotap_common.api.endpoints import ORDER_RESERVE_REQUEST_ENDPOINT, ORDER_LIST_ENDPOINT
 
 
 def get_order_list():
@@ -27,7 +27,7 @@ def order_request(offer_id: int, adult_count: int, children_count: int):
     """
     # call to API Gateway for getting offers
     response = requests.post(
-        ORDER_REQUEST_ENDPOINT,
+        ORDER_RESERVE_REQUEST_ENDPOINT,
         data={"offer_id": offer_id,
               "customer_email": session["email"],
               "adult_count": adult_count,
@@ -36,3 +36,12 @@ def order_request(offer_id: int, adult_count: int, children_count: int):
 
     if response.status_code != 200:
         raise NotImplementedError
+
+
+def order_payment(order_id: int, card_number):
+    """
+    Request order offer
+    """
+    # call to API Gateway for getting offers
+    # TODO
+    raise NotImplementedError
