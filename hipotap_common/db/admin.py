@@ -11,6 +11,7 @@ def init_db():
     DBModel.metadata.create_all(engine)
 
     db_session.add(Customer_Table(email="a@a", name="Joe", surname="Doe", password="123"))
+
     for offer in offers_dict:
         db_session.add(Offer_Table(
             title=offer["title"],

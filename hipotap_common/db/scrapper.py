@@ -1,17 +1,19 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
 import time
 import re
-import math
 import random
 
 class Scrapper:
     def parce(self):
         FILE_PATH_FOLDER = '.'
+        CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
         search_query = 'https://www.itaka.pl/'
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        driver = webdriver.Chrome(executable_path='../chromedriver_win32/chromedriver.exe', options=options)
+        options.add_argument('--headless')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--no-sandbox')
+        driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
         offers_details = []
         driver.get(search_query)
         time.sleep(2)
@@ -30,7 +32,7 @@ class Scrapper:
 
         # Open all additional pages
         more_offers = driver.find_elements_by_xpath("//div[@class='offer-list_more-offers clearfix']")
-        while(len(more_offers) > 0):
+        for _ in range(5):
             driver.execute_script("arguments[0].click();", more_offers[0])
             time.sleep(1)
             more_offers = driver.find_elements_by_xpath("//div[@class='offer-list_more-offers clearfix']")
@@ -54,7 +56,7 @@ class Scrapper:
 
             price_elem = each_offer.find_elements_by_xpath(".//span[@class='current-price_value']")[1]
             result = re.search(r"^(.*) PLN / os", price_elem.text)
-            price = result.group(1);
+            price = result.group(1)
             price = float(price.replace(" ", ""))
             child_price = price/2
 
@@ -64,10 +66,7 @@ class Scrapper:
             max_children_count = random.randint(0, 20)
             offer_info = {"title": "title", "description": "desc", "place": place_elem.text, "hotel": hotel_elem.text, "max_adult_count": max_adult_count, "max_children_count": max_children_count,
                          "date_start": start_date + ' 00:00:00', "date_end": end_date + ' 00:00:00', "price_adult": price, "price_children": child_price}
-            print(offer_info)
+            # print(offer_info)
             offers_details.append(offer_info)
         driver.quit()
         return offers_details
-
-scrapper = Scrapper()
-scrapper.parce()
