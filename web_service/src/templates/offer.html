@@ -18,6 +18,8 @@
             <th>Hotel</th>
             <th>Price for adult</th>
             <th>Price for child</th>
+            <th>Adults</th>
+            <th>Children</th>
             <th>Date start:</th>
             <th>Date end:</th>
         </tr>
@@ -30,8 +32,20 @@
             <td>{{ offer.hotel }}</td>
             <td>{{ offer.price_adult }}</td>
             <td>{{ offer.price_children }}</td>
-            <td>{{ offer.date_start }}</td>
-            <td>{{ offer.date_end }}</td>
+            <td>
+                {% if offer.max_adult_count > 0 %}
+                0 -
+                {% endif %}
+                {{ offer.max_adult_count }}
+            </td>
+            <td>
+                {% if offer.max_children_count > 0 %}
+                0 -
+                {% endif %}
+                {{ offer.max_children_count }}
+            </td>
+            <td>{{ offer.date_start[0:10] }}</td>
+            <td>{{ offer.date_end[0:10] }}</td>
         </tr>
     </tbody>
 </table>

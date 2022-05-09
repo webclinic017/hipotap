@@ -24,7 +24,7 @@
     <label for="place">Place:</label>
     <input type="text" id="place" name="place">
     
-    <label for="date_start">Departure date:</label>
+    <label for="date_start">Date start:</label>
     <input type="date" id="date_start" name="date_start">
 
     <label for="date_end">End date:</label>
@@ -42,6 +42,8 @@
             <th>Hotel</th>
             <th>Price for adult</th>
             <th>Price for child</th>
+            <th>Adults</th>
+            <th>Children</th>
             <th>Date start:</th>
             <th>Date end:</th>
             <th>Action</th>
@@ -56,8 +58,20 @@
             <td>{{ offer.hotel }}</td>
             <td>{{ offer.price_adult }}</td>
             <td>{{ offer.price_children }}</td>
-            <td>{{ offer.date_start }}</td>
-            <td>{{ offer.date_end }}</td>
+            <td>
+                {% if offer.max_adult_count > 0 %}
+                0 -
+                {% endif %}
+                {{ offer.max_adult_count }}
+            </td>
+            <td>
+                {% if offer.max_children_count > 0 %}
+                0 -
+                {% endif %}
+                {{ offer.max_children_count }}
+            </td>
+            <td>{{ offer.date_start[0:10] }}</td>
+            <td>{{ offer.date_end[0:10] }}</td>
             <td>
                 <a href="{{ url_for('offers.get_offer', offer_id=offer.id) }}" class="button is-primary">
                     View

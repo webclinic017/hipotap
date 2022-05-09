@@ -50,6 +50,10 @@ def post_order_offer(offer_id):
     adult_count = int(request.form["adult_count"])
     children_count = int(request.form["children_count"])
 
+    if adult_count + children_count < 1:
+        flash("Cannot buy offer for 0 people", "is-danger")
+        return redirect(url_for("offers.get_offers"))
+
     if not ("authenticated" in session and session["authenticated"]):
         flash("You must be logged in to order or reserve offers", "is-danger")
         return redirect(url_for("offers.get_offers"))
