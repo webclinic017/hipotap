@@ -2,3 +2,4 @@ pika==1.2.0
 protobuf==3.19.0
 SQLAlchemy==1.4.27
 psycopg2-binary==2.9.1
+selenium==3.141.0
