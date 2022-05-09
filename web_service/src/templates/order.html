@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table is-fullwidth">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Offer ID</th>
+            <th>Number of adults</th>
+            <th>Number of children</th>
+            <th>price</th>
+            <th>Created at</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.offer_id }}</td>
+            <td>{{ order.adult_count }}</td>
+            <td>{{ order.children_count }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.creation_time }}</td>
+            <td>
+            {% if order.payment_status == 'PAID' %}
+                Order paid
+            {% else %}
+                PENDING
+                <a href="{{ url_for('orders.get_order_payment', order_id=order.id) }}" class="button is-primary">
+                    Payment
+                </a>
+            {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

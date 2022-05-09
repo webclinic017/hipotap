@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Are you ready to pay?</h2>
+<table class="table is-fullwidth">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Offer ID</th>
+            <th>Number of adults</th>
+            <th>Number of children</th>
+            <th>price</th>
+            <th>Created at</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.offer_id }}</td>
+            <td>{{ order.adult_count }}</td>
+            <td>{{ order.children_count }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.creation_time }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<form action="{{ url_for('orders.post_order_payment', order_id=order.id) }}" method="post">
+    <label for="card_number">Card number:</label>
+    <input type="text" id="card_number" name="card_number"><br>
+    <label for="price">Price</label>
+    <input type="text" id="price" name="price" value="{{ order.price }}" readonly><br>
+
+    <button type="submit" class="button is-secondary">Pay</button>
+</form>
+
+{% endblock %}

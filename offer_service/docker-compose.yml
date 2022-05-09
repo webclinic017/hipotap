@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  offer:
+    container_name: hipotap_offer
+    build:
+      context: ..
+      dockerfile: offer_service/Dockerfile
+  offer_db:
+    container_name: hipotap_offer_db
+    hostname: hipotap_offer_db
+    image: postgres:12.10
+    environment:
+      - POSTGRES_USER=hipotap
+      - POSTGRES_PASSWORD=hipotap
+      - POSTGRES_DB=offer_db

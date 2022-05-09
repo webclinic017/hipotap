@@ -1,28 +1,77 @@
 version: '3.9'
 
 services:
-  brocker:
-    container_name: hipotap_brocker
-    build: brocker_service/
-    hostname: hipotap-brocker
+  broker:
+    extends:
+      file: broker_service/docker-compose.yml
+      service: broker
     networks:
       - hipotap-net
+
   web:
-    container_name: hipotap_web
-    build: web_service
+    extends:
+      file: web_service/docker-compose.yml
+      service: web
+    depends_on:
+      - broker
     networks:
       - hipotap-net
+
+  api_gateway:
+    extends:
+      file: api_gateway/docker-compose.yml
+      service: api_gateway
     depends_on:
-      - brocker
-    ports:
-      - "5000:5000"
-  trip:
-    container_name: hipotap_trip
-    build: trip_service
+      - broker
     networks:
       - hipotap-net
+
+  customer:
+    extends:
+      file: customer_service/docker-compose.yml
+      service: customer
     depends_on:
-      - brocker
+      - broker
+      - hipotap_db
+    networks:
+      - hipotap-net
+
+  offer:
+    extends:
+      file: offer_service/docker-compose.yml
+      service: offer
+    depends_on:
+      - broker
+      - hipotap_db
+    networks:
+      - hipotap-net
+
+  order:
+    extends:
+      file: order_service/docker-compose.yml
+      service: order
+    depends_on:
+      - broker
+      - hipotap_db
+    networks:
+      - hipotap-net
+
+  payment:
+    extends:
+      file: payment_service/docker-compose.yml
+      service: payment
+    depends_on:
+      - broker
+      - hipotap_db
+    networks:
+      - hipotap-net
+
+  hipotap_db:
+    extends:
+      file: hipotap_db/docker-compose.yml
+      service: hipotap_db
+    networks:
+      - hipotap-net
 
 networks:
   hipotap-net:

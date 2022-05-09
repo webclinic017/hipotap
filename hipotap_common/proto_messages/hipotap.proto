@@ -1,0 +1,14 @@
+syntax = "proto3";
+package hipotap;
+
+import "google/protobuf/any.proto";
+
+enum BaseStatus {
+      OK = 0;
+      FAIL = 1;
+  }
+
+message BaseResponsePB {
+    BaseStatus status = 1;
+    google.protobuf.Any message = 2;
+}

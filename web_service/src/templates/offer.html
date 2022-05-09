@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ offer.title }}</h2>
+<img src="https://via.placeholder.com/400x300" alt="{{ offer.title }}">
+
+<p>
+    {{ offer.description }}
+</p>
+
+<table class="table is-fullwidth">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Place</th>
+            <th>Hotel</th>
+            <th>Price for adult</th>
+            <th>Price for child</th>
+            <th>Date start:</th>
+            <th>Date end:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ offer.id }}</td>
+            <td>{{ offer.title }}</td>
+            <td>{{ offer.place }}</td>
+            <td>{{ offer.hotel }}</td>
+            <td>{{ offer.price_adult }}</td>
+            <td>{{ offer.price_children }}</td>
+            <td>{{ offer.date_start }}</td>
+            <td>{{ offer.date_end }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% if session['authenticated'] %}
+<form action="{{ url_for('orders.post_order_offer', offer_id=offer.id) }}" method="post">
+    <label for="adult_count">Adult count:</label>
+    <input type="number" id="adult_count" name="adult_count" min="0" max="{{ offer.max_adult_count }}" value="0">
+
+    <label for="children_count">Children count:</label>
+    <input type="number" id="children_count" name="children_count" min="0" max="{{ offer.max_children_count }}" value="0">
+
+    <button type="submit" name="purchase_button" class="button is-secondary">Purchase</button>
+    <button type="submit" name="reserve_button" class="button is-secondary">Reserve</button>
+</form>
+{% endif %}
+
+{% endblock %}

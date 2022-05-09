@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  web:
+    container_name: hipotap_web
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+    - FLASK_APP=/hipotap_web
+    - FLASK_ENV=development
+    volumes:
+      - './src/:/hipotap_web/'
+      - '../hipotap_common/:/hipotap_web/hipotap_common/'

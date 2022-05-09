@@ -1,0 +1,30 @@
+syntax = "proto3";
+package offer;
+
+import "google/protobuf/timestamp.proto";
+
+message OfferFilterPB {
+  repeated string list_of_destinations = 1;
+}
+
+message OfferPB {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string place = 4;
+  string hotel = 5;
+  int32 max_adult_count = 6;
+  int32 max_children_count = 7;
+  float price_adult = 8;
+  float price_children = 9;
+  google.protobuf.Timestamp date_start = 10;
+  google.protobuf.Timestamp date_end = 11;
+}
+
+message OfferListPB {
+  repeated OfferPB offers = 1;
+}
+
+message OfferRequestPB {
+  int32 offer_id = 1;
+}

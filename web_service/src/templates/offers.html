@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table is-fullwidth">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Place</th>
+            <th>Hotel</th>
+            <th>Price for adult</th>
+            <th>Price for child</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>{{ offer.id }}</td>
+            <td>{{ offer.title }}</td>
+            <td>{{ offer.place }}</td>
+            <td>{{ offer.hotel }}</td>
+            <td>{{ offer.price_adult }}</td>
+            <td>{{ offer.price_children }}</td>
+            <td>
+                <a href="{{ url_for('offers.get_offer', offer_id=offer.id) }}" class="button is-primary">
+                    View
+                </a>
+                <!-- <a href="{{ url_for('orders.post_order_offer', offer_id=offer.id) }}" class="button is-primary">
+                    Purchase
+                </a> -->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
