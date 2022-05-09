@@ -1,7 +1,17 @@
 import pika
 from hipotap_common.proto_messages.hipotap_pb2 import BaseResponsePB
-from hipotap_common.proto_messages.order_pb2 import OrderListPB, OrderPaymentRequestPB
-from hipotap_common.queues.order_queues import ORDER_PAYMENT_REQUEST_QUEUE, ORDER_RESERVE_REQUEST_QUEUE, ORDER_LIST_QUEUE
+from hipotap_common.proto_messages.order_pb2 import (
+    GetOrderRequestPB,
+    OrderListPB,
+    OrderPB,
+    OrderPaymentRequestPB,
+)
+from hipotap_common.queues.order_queues import (
+    GET_ORDER_QUEUE,
+    ORDER_PAYMENT_REQUEST_QUEUE,
+    ORDER_RESERVE_REQUEST_QUEUE,
+    ORDER_LIST_QUEUE,
+)
 
 from .rpc_client import RpcClient
 
@@ -49,7 +59,30 @@ class OrderRpcClient(RpcClient):
         response.ParseFromString(self.response)
         return response
 
-    def order_payment_request(self, order_payment_request_pb: OrderPaymentRequestPB) -> BaseResponsePB:
+    def get_order(self, get_order_request_pb: GetOrderRequestPB) -> OrderPB:
+        self.init_callback()
+
+        # Send request
+        self.channel.basic_publish(
+            exchange="",
+            routing_key=GET_ORDER_QUEUE,
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue, correlation_id=self.corr_id
+            ),
+            body=get_order_request_pb.SerializeToString(),
+        )
+
+        # Wait for response
+        while self.response is None:
+            self.connection.process_data_events()
+
+        response = OrderPB()
+        response.ParseFromString(self.response)
+        return response
+
+    def order_payment_request(
+        self, order_payment_request_pb: OrderPaymentRequestPB
+    ) -> BaseResponsePB:
         self.init_callback()
 
         # Send request

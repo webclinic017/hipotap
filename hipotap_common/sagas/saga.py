@@ -8,16 +8,17 @@ class Saga:
 
     def run(self):
 
-        rollback_step = None
+        rollback_step = -1
 
         for i, (step, rollback) in enumerate(self.steps):
             print(f"Saga {self.name}: running step {i+1}.")
             if not step():
                 print(f"Saga {self.name} failed at step {i+1}")
-                rollback_step = i
+                # if step i failed then we need to rollback starting from rollback step i - 1
+                rollback_step = i - 1
                 break
 
-        if rollback_step is not None:
+        if rollback_step >= 0:
             for i in reversed(range(rollback_step + 1)):
                 # execute rollback step
                 print(f"Saga {self.name}: running rollback step {i+1}.")

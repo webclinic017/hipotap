@@ -4,6 +4,7 @@ import time
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
 from hipotap_common.api.endpoints import (
+    GET_ORDER_PATH,
     ORDER_PAYMENT_PATH,
     ORDER_RESERVE_REQUEST_PATH,
     ORDER_LIST_PATH,
@@ -13,6 +14,8 @@ from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
 from hipotap_common.proto_messages.hipotap_pb2 import BaseStatus
 from hipotap_common.proto_messages.order_pb2 import (
+    GetOrderRequestPB,
+    OrderPB,
     OrderPaymentRequestPB,
     OrderRequestPB,
     OrderListRequestPB,
@@ -133,7 +136,13 @@ async def order_reserve_request(
 
     if order_response.status == BaseStatus.OK:
         print("Order OK", flush=True)
-        return {"status": "OK"}
+        order_pb = OrderPB()
+        order_response.message.Unpack(order_pb)
+        return json_format.MessageToDict(
+            order_pb,
+            preserving_proto_field_name=True,
+            including_default_value_fields=True,
+        )
     else:
         raise HTTPException(status_code=401, detail="Cannot order offer")
 
@@ -152,16 +161,32 @@ async def order_list_request(customer_email: str = Form(...)):
     )
 
 
+@app.get(GET_ORDER_PATH)
+async def get_order_request(order_id: int = Form(...)):
+
+    order_client = OrderRpcClient()
+    get_order_request_PB = GetOrderRequestPB()
+    get_order_request_PB.order_id = order_id
+    order_pb = order_client.get_order(get_order_request_PB)
+    return json_format.MessageToDict(
+        order_pb,
+        preserving_proto_field_name=True,
+        including_default_value_fields=True,
+    )
+
+
 @app.post(ORDER_PAYMENT_PATH)
 async def order_payment_request(
     order_id: int = Form(...),
     card_number: str = Form(...),
+    price: float = Form(...),
 ):
 
     order_client = OrderRpcClient()
     order_paymet_request_pb = OrderPaymentRequestPB()
     order_paymet_request_pb.order_id = order_id
     order_paymet_request_pb.payment_info.card_number = card_number
+    order_paymet_request_pb.payment_info.price = price
 
     payment_response = order_client.order_payment_request(order_paymet_request_pb)
 

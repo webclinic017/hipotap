@@ -5,6 +5,7 @@ from ..hipotap_common.api.endpoints import (
     ORDER_RESERVE_REQUEST_ENDPOINT,
     ORDER_LIST_ENDPOINT,
     ORDER_PAYMENT_ENDPOINT,
+    GET_ORDER_ENDPOINT,
 )
 
 
@@ -23,7 +24,20 @@ def get_order_list():
     return response.json()["orders"]
 
 
-def order_request(offer_id: int, adult_count: int, children_count: int):
+def get_order(order_id):
+    """
+    Get customer order
+    """
+    # call to API Gateway for getting offers
+    response = requests.get(GET_ORDER_ENDPOINT, data={"order_id": order_id})
+
+    if response.status_code != 200:
+        raise NotImplementedError
+
+    return response.json()
+
+
+def reserve_offer_request(offer_id: int, adult_count: int, children_count: int):
     """
     Request order offer
     """
@@ -41,13 +55,16 @@ def order_request(offer_id: int, adult_count: int, children_count: int):
     if response.status_code != 200:
         raise NotImplementedError
 
+    return response.json()
 
-def order_payment(order_id: int, card_number):
+
+def order_payment(order_id: int, card_number, price):
     """
     Pay for order
     """
     response = requests.post(
-        ORDER_PAYMENT_ENDPOINT, data={"order_id": order_id, "card_number": card_number}
+        ORDER_PAYMENT_ENDPOINT,
+        data={"order_id": order_id, "card_number": card_number, "price": price},
     )
 
     if response.status_code != 200:

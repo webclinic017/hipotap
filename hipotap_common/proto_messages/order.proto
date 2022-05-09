@@ -22,6 +22,10 @@ message OrderPB {
   string payment_status = 8;
 }
 
+message GetOrderRequestPB {
+  int32 order_id = 1;
+}
+
 message OrderListRequestPB {
   string customer_email = 1;
 }
@@ -31,7 +35,8 @@ message OrderListPB {
 }
 
 message PaymentInfoPB {
-  string card_number = 1;
+  float price = 1;
+  string card_number = 2;
 }
 
 message OrderPaymentRequestPB {
