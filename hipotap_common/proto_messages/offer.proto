@@ -4,7 +4,22 @@ package offer;
 import "google/protobuf/timestamp.proto";
 
 message OfferFilterPB {
-  repeated string list_of_destinations = 1;
+  bool use_allowed_adult_count = 1;
+  bool use_allowed_children_count = 2;
+  bool use_max_adult_price = 3;
+  bool use_max_children_price = 4;
+  bool use_place = 5;
+  bool use_hotel = 6;
+  bool use_date_start = 7;
+  bool use_date_end = 8;
+  int32 allowed_adult_count = 9;
+  int32 allowed_children_count = 10;
+  float max_adult_price = 11;
+  float max_children_price = 12;
+  string place = 13;
+  string hotel = 14;
+  google.protobuf.Timestamp date_start = 15;
+  google.protobuf.Timestamp date_end = 16;
 }
 
 message OfferPB {

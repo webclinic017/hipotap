@@ -1,7 +1,7 @@
 from flask import session
 import requests
 
-from ..hipotap_common.api.endpoints import OFFERS_ENDPOINT, OFFER_ENDPOINT
+from ..hipotap_common.api.endpoints import OFFERS_ENDPOINT, OFFER_ENDPOINT, OFFER_FILTERING_ENDPOINT
 
 
 def get_offer_list():
@@ -33,3 +33,17 @@ def get_single_offer(offer_id):
         raise NotImplementedError
 
     return response.json()
+
+def get_filtered_offers(filter):
+    """
+    Get filtered offers
+    """
+    # call to API Gateway for getting offers
+    response = requests.get(
+        OFFER_FILTERING_ENDPOINT, data=filter
+    )
+
+    if response.status_code != 200:
+        raise NotImplementedError
+
+    return response.json()['offers']

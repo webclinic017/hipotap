@@ -1,6 +1,8 @@
 import sys
 import time
+import datetime
 
+from typing import Optional
 from fastapi import FastAPI, Form, HTTPException
 from google.protobuf import json_format
 from hipotap_common.api.endpoints import (
@@ -9,6 +11,7 @@ from hipotap_common.api.endpoints import (
     ORDER_RESERVE_REQUEST_PATH,
     ORDER_LIST_PATH,
     OFFER_PATH,
+    OFFER_FILTERING_PATH
 )
 from hipotap_common.proto_messages.auth_pb2 import AuthStatus
 from hipotap_common.proto_messages.customer_pb2 import CustomerCredentialsPB, CustomerPB
@@ -19,6 +22,9 @@ from hipotap_common.proto_messages.order_pb2 import (
     OrderPaymentRequestPB,
     OrderRequestPB,
     OrderListRequestPB,
+)
+from hipotap_common.proto_messages.offer_pb2 import (
+    OfferFilterPB
 )
 from pydantic import BaseModel
 
@@ -113,6 +119,63 @@ async def offers(offer_id: int = Form(...)):
 
     return json_format.MessageToDict(
         offer_pb,
+        preserving_proto_field_name=True,
+        including_default_value_fields=True,
+    )
+
+
+@app.get(OFFER_FILTERING_PATH)
+async def offers_filtered(
+    allowed_adult_count: Optional[int] = Form(None),
+    allowed_children_count: Optional[int] = Form(None),
+    max_adult_price: Optional[float] = Form(None),
+    max_children_price: Optional[float] = Form(None),
+    hotel: Optional[str] = Form(None),
+    place: Optional[str] = Form(None),
+    date_start: Optional[str] = Form(None),
+    date_end: Optional[str] = Form(None)
+):
+    print(f"Got [GET]/offer/filter/ with "
+          f"allowed_adult_count={allowed_adult_count}, "
+          f"allowed_children_count={allowed_children_count}, "
+          f"max_adult_price={max_adult_price}, "
+          f"max_children_price = {max_children_price}, "
+          f"hotel={hotel}, "
+          f"place={place}, "
+          f"date_start={date_start}, "
+          f"date_end={date_end}", flush=True)
+
+    offer_client = OfferRpcClient()
+    offer_filter_pb = OfferFilterPB()
+
+    offer_filter_pb.use_allowed_adult_count = allowed_adult_count is not None
+    offer_filter_pb.use_allowed_children_count = allowed_children_count is not None
+    offer_filter_pb.use_max_adult_price = max_adult_price is not None
+    offer_filter_pb.use_max_children_price = max_children_price is not None
+    offer_filter_pb.use_place = place is not None
+    offer_filter_pb.use_hotel = hotel is not None
+    offer_filter_pb.use_date_start = date_start is not None
+    offer_filter_pb.use_date_end = date_end is not None
+    if offer_filter_pb.use_allowed_adult_count:
+        offer_filter_pb.allowed_adult_count = allowed_adult_count
+    if offer_filter_pb.use_allowed_children_count:
+        offer_filter_pb.allowed_children_count = allowed_children_count
+    if offer_filter_pb.use_max_adult_price:
+        offer_filter_pb.max_adult_price = max_adult_price
+    if offer_filter_pb.use_max_children_price:
+        offer_filter_pb.max_children_price = max_children_price
+    if offer_filter_pb.use_place:
+        offer_filter_pb.place = place
+    if offer_filter_pb.use_hotel:
+        offer_filter_pb.hotel = hotel
+    if offer_filter_pb.use_date_start:
+        offer_filter_pb.date_start.FromDatetime(datetime.datetime.strptime(date_start, "%Y-%m-%d"))
+    if offer_filter_pb.use_date_end:
+        offer_filter_pb.date_end.FromDatetime(datetime.datetime.strptime(date_end, "%Y-%m-%d"))
+    offer_list_pb = offer_client.get_offers_filtered(offer_filter_pb)
+
+    return json_format.MessageToDict(
+        offer_list_pb,
         preserving_proto_field_name=True,
         including_default_value_fields=True,
     )
