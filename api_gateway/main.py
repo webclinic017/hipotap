@@ -161,7 +161,7 @@ async def order_payment_request(
     order_client = OrderRpcClient()
     order_paymet_request_pb = OrderPaymentRequestPB()
     order_paymet_request_pb.order_id = order_id
-    order_paymet_request_pb.card_number = card_number
+    order_paymet_request_pb.payment_info.card_number = card_number
 
     payment_response = order_client.order_payment_request(order_paymet_request_pb)
 

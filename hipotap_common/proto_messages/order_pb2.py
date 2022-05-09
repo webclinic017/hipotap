@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='order',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0border.proto\x12\x05order\x1a\x1fgoogle/protobuf/timestamp.proto\"g\n\x0eOrderRequestPB\x12\x10\n\x08offer_id\x18\x01 \x01(\x05\x12\x16\n\x0e\x63ustomer_email\x18\x02 \x01(\t\x12\x13\n\x0b\x61\x64ult_count\x18\x03 \x01(\x05\x12\x16\n\x0e\x63hildren_count\x18\x04 \x01(\x05\"\xc3\x01\n\x07OrderPB\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08offer_id\x18\x02 \x01(\x05\x12\x13\n\x0b\x63ustomer_id\x18\x03 \x01(\t\x12\x13\n\x0b\x61\x64ult_count\x18\x04 \x01(\x05\x12\x16\n\x0e\x63hildren_count\x18\x05 \x01(\x05\x12\r\n\x05price\x18\x06 \x01(\x02\x12\x31\n\rcreation_time\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x16\n\x0epayment_status\x18\x08 \x01(\t\",\n\x12OrderListRequestPB\x12\x16\n\x0e\x63ustomer_email\x18\x01 \x01(\t\"-\n\x0bOrderListPB\x12\x1e\n\x06orders\x18\x01 \x03(\x0b\x32\x0e.order.OrderPB\">\n\x15OrderPaymentRequestPB\x12\x10\n\x08order_id\x18\x01 \x01(\x05\x12\x13\n\x0b\x63\x61rd_number\x18\x02 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0border.proto\x12\x05order\x1a\x1fgoogle/protobuf/timestamp.proto\"g\n\x0eOrderRequestPB\x12\x10\n\x08offer_id\x18\x01 \x01(\x05\x12\x16\n\x0e\x63ustomer_email\x18\x02 \x01(\t\x12\x13\n\x0b\x61\x64ult_count\x18\x03 \x01(\x05\x12\x16\n\x0e\x63hildren_count\x18\x04 \x01(\x05\"\xc3\x01\n\x07OrderPB\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08offer_id\x18\x02 \x01(\x05\x12\x13\n\x0b\x63ustomer_id\x18\x03 \x01(\t\x12\x13\n\x0b\x61\x64ult_count\x18\x04 \x01(\x05\x12\x16\n\x0e\x63hildren_count\x18\x05 \x01(\x05\x12\r\n\x05price\x18\x06 \x01(\x02\x12\x31\n\rcreation_time\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x16\n\x0epayment_status\x18\x08 \x01(\t\",\n\x12OrderListRequestPB\x12\x16\n\x0e\x63ustomer_email\x18\x01 \x01(\t\"-\n\x0bOrderListPB\x12\x1e\n\x06orders\x18\x01 \x03(\x0b\x32\x0e.order.OrderPB\"$\n\rPaymentInfoPB\x12\x13\n\x0b\x63\x61rd_number\x18\x01 \x01(\t\"U\n\x15OrderPaymentRequestPB\x12\x10\n\x08order_id\x18\x01 \x01(\x05\x12*\n\x0cpayment_info\x18\x02 \x01(\x0b\x32\x14.order.PaymentInfoPBb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -221,23 +221,16 @@ _ORDERLISTPB = _descriptor.Descriptor(
 )
 
 
-_ORDERPAYMENTREQUESTPB = _descriptor.Descriptor(
-  name='OrderPaymentRequestPB',
-  full_name='order.OrderPaymentRequestPB',
+_PAYMENTINFOPB = _descriptor.Descriptor(
+  name='PaymentInfoPB',
+  full_name='order.PaymentInfoPB',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='order_id', full_name='order.OrderPaymentRequestPB.order_id', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='card_number', full_name='order.OrderPaymentRequestPB.card_number', index=1,
-      number=2, type=9, cpp_type=9, label=1,
+      name='card_number', full_name='order.PaymentInfoPB.card_number', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -255,15 +248,55 @@ _ORDERPAYMENTREQUESTPB = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=451,
-  serialized_end=513,
+  serialized_end=487,
+)
+
+
+_ORDERPAYMENTREQUESTPB = _descriptor.Descriptor(
+  name='OrderPaymentRequestPB',
+  full_name='order.OrderPaymentRequestPB',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='order_id', full_name='order.OrderPaymentRequestPB.order_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='payment_info', full_name='order.OrderPaymentRequestPB.payment_info', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=489,
+  serialized_end=574,
 )
 
 _ORDERPB.fields_by_name['creation_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDERLISTPB.fields_by_name['orders'].message_type = _ORDERPB
+_ORDERPAYMENTREQUESTPB.fields_by_name['payment_info'].message_type = _PAYMENTINFOPB
 DESCRIPTOR.message_types_by_name['OrderRequestPB'] = _ORDERREQUESTPB
 DESCRIPTOR.message_types_by_name['OrderPB'] = _ORDERPB
 DESCRIPTOR.message_types_by_name['OrderListRequestPB'] = _ORDERLISTREQUESTPB
 DESCRIPTOR.message_types_by_name['OrderListPB'] = _ORDERLISTPB
+DESCRIPTOR.message_types_by_name['PaymentInfoPB'] = _PAYMENTINFOPB
 DESCRIPTOR.message_types_by_name['OrderPaymentRequestPB'] = _ORDERPAYMENTREQUESTPB
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -294,6 +327,13 @@ OrderListPB = _reflection.GeneratedProtocolMessageType('OrderListPB', (_message.
   # @@protoc_insertion_point(class_scope:order.OrderListPB)
   ))
 _sym_db.RegisterMessage(OrderListPB)
+
+PaymentInfoPB = _reflection.GeneratedProtocolMessageType('PaymentInfoPB', (_message.Message,), dict(
+  DESCRIPTOR = _PAYMENTINFOPB,
+  __module__ = 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.PaymentInfoPB)
+  ))
+_sym_db.RegisterMessage(PaymentInfoPB)
 
 OrderPaymentRequestPB = _reflection.GeneratedProtocolMessageType('OrderPaymentRequestPB', (_message.Message,), dict(
   DESCRIPTOR = _ORDERPAYMENTREQUESTPB,

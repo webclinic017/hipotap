@@ -6,6 +6,7 @@ from hipotap_common.queues.order_queues import (
     ORDER_LIST_QUEUE,
     ORDER_PAYMENT_REQUEST_QUEUE
 )
+from hipotap_common.rpc.clients.payment_rpc_client import PaymentRpcClient
 from hipotap_common.rpc.rpc_subscriber import RpcSubscriber
 
 from hipotap_common.db import Order_Table, db_session
@@ -85,11 +86,15 @@ def on_order_payment_request(ch, method, properties, body):
     )
     response_pb = BaseResponsePB()
     # TODO: Saga for payment
-    order = db_session.query(Order_Table).filter_by(id=order_payment_request_pb.order_id).one()
-    # .update({Order_Table.payment_status: "PAID"})
-    order.payment_status = "PAID"
-    db_session.commit()
-    response_pb.status = BaseStatus.OK
+    payment_client = PaymentRpcClient()
+    payment_responst = payment_client.authorize_payment(order_payment_request_pb.payment_info)
+    if payment_responst.status == BaseStatus.OK:
+        order = db_session.query(Order_Table).filter_by(id=order_payment_request_pb.order_id).one()
+        order.payment_status = "PAID"
+        db_session.commit()
+        response_pb.status = BaseStatus.OK
+    else:
+        response_pb.status = BaseStatus.FAIL
 
     # Send response
     ch.basic_publish(

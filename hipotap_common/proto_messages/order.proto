@@ -30,7 +30,11 @@ message OrderListPB {
   repeated OrderPB orders = 1;
 }
 
+message PaymentInfoPB {
+  string card_number = 1;
+}
+
 message OrderPaymentRequestPB {
   int32 order_id = 1;
-  string card_number = 2;
+  PaymentInfoPB payment_info = 2;
 }

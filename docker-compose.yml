@@ -56,6 +56,16 @@ services:
     networks:
       - hipotap-net
 
+  payment:
+    extends:
+      file: payment_service/docker-compose.yml
+      service: payment
+    depends_on:
+      - broker
+      - hipotap_db
+    networks:
+      - hipotap-net
+
   hipotap_db:
     extends:
       file: hipotap_db/docker-compose.yml
