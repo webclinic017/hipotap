@@ -2,77 +2,61 @@ version: '3.9'
 
 services:
   broker:
-    extends:
-      file: broker_service/docker-compose.yml
-      service: broker
-    networks:
-      - hipotap-net
+    image: leckijakub/rsww_172127_broker
+    hostname: hipotap_broker
+    env_file:
+      - env.env
 
   web:
-    extends:
-      file: web_service/docker-compose.yml
-      service: web
+    image: leckijakub/rsww_172127_web
+    environment:
+      - FLASK_APP=/hipotap_web
+      - FLASK_ENV=development
+    env_file:
+      - env.env
+    ports:
+      - "17212:5000"
     depends_on:
       - broker
-    networks:
-      - hipotap-net
 
   api_gateway:
-    extends:
-      file: api_gateway/docker-compose.yml
-      service: api_gateway
+    image: leckijakub/rsww_172127_api_gateway
+    hostname: hipotap_api_gateway
     depends_on:
       - broker
-    networks:
-      - hipotap-net
+    env_file:
+      - env.env
 
   customer:
-    extends:
-      file: customer_service/docker-compose.yml
-      service: customer
+    image: leckijakub/rsww_172127_customer
     depends_on:
       - broker
-      - hipotap_db
-    networks:
-      - hipotap-net
+    env_file:
+      - env.env
 
   offer:
-    extends:
-      file: offer_service/docker-compose.yml
-      service: offer
+    image: leckijakub/rsww_172127_offer
     depends_on:
       - broker
-      - hipotap_db
-    networks:
-      - hipotap-net
+    env_file:
+      - env.env
 
   order:
-    extends:
-      file: order_service/docker-compose.yml
-      service: order
+    image: leckijakub/rsww_172127_order
     depends_on:
       - broker
-      - hipotap_db
-    networks:
-      - hipotap-net
+    env_file:
+      - env.env
 
   payment:
-    extends:
-      file: payment_service/docker-compose.yml
-      service: payment
+    image: leckijakub/rsww_172127_payment
     depends_on:
       - broker
-      - hipotap_db
-    networks:
-      - hipotap-net
+    env_file:
+      - env.env
 
+  # remove test db when on production
   hipotap_db:
     extends:
       file: hipotap_db/docker-compose.yml
       service: hipotap_db
-    networks:
-      - hipotap-net
-
-networks:
-  hipotap-net:
-    driver: bridge

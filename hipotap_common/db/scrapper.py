@@ -66,7 +66,6 @@ class Scrapper:
             max_children_count = random.randint(0, 20)
             offer_info = {"title": "title", "description": "desc", "place": place_elem.text, "hotel": hotel_elem.text, "max_adult_count": max_adult_count, "max_children_count": max_children_count,
                          "date_start": start_date + ' 00:00:00', "date_end": end_date + ' 00:00:00', "price_adult": price, "price_children": child_price}
-            # print(offer_info)
             offers_details.append(offer_info)
         driver.quit()
         return offers_details

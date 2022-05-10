@@ -7,7 +7,7 @@ MAX_CONNECTION_ATTEMPTS = 100
 
 def connect_to_brocker():
     credentials = pika.PlainCredentials("guest", "guest")
-    parameters = pika.ConnectionParameters("hipotap_broker", 5672, "/", credentials)
+    parameters = pika.ConnectionParameters("broker", 5672, "/", credentials)
     for i in range(MAX_CONNECTION_ATTEMPTS):
         try:
             connection = pika.BlockingConnection(parameters)

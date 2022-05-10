@@ -7,8 +7,12 @@ from google.protobuf.any_pb2 import Any
 
 from ..proto_messages.offer_pb2 import OfferPB
 from ..proto_messages.order_pb2 import OrderPB
+import os
 
-engine = create_engine("postgresql://hipotap:hipotap@hipotap_db:5432/hipotap_db")
+DB_PATH = os.environ.get("DB_PATH", "postgresql://hipotap:hipotap@hipotap_db:5432/hipotap_db")
+# postgresql://postgres:student@10.40.71.55:5432/RSWW_172127_1
+print("CONNECTING TO DB:", DB_PATH)
+engine = create_engine(DB_PATH)
 engine.connect()
 
 DBModel = declarative_base()
