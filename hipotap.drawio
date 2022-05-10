@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-05-01T18:30:04.250Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36" etag="AI48ozSp9uu-xUTid_6u" version="17.5.0" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-05-10T00:50:45.939Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="EjRnuPhenH44ksiXwkQ2" version="18.0.2" type="github" pages="2">
   <diagram id="kO__wrCLHh8eWBU0QF4_" name="Architecture-overview">
-    <mxGraphModel dx="3418" dy="2044" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3762" dy="2233" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -131,9 +131,6 @@
         <mxCell id="53pI2VVZi_R9F05QZi0w-3" value="&lt;b&gt;Customer service&lt;/b&gt;&lt;br&gt;&lt;br&gt;Managing customer&#39;s: data/history/authorizing" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-1240" y="-600" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="53pI2VVZi_R9F05QZi0w-18" value="&lt;b&gt;?Trip service?&lt;/b&gt;&lt;br&gt;&lt;p&gt;Trip without date and number of people&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="-690" y="-458" width="160.17" height="80" as="geometry" />
-        </mxCell>
         <mxCell id="FXThsR5IkIlW8cSpPoi2-3" value="&lt;b&gt;bank service&lt;/b&gt;&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="-1440" y="-440" width="140" height="80" as="geometry" />
         </mxCell>
@@ -180,22 +177,11 @@
             <mxPoint x="2" y="1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ciQ16A8ldrNPRgCq4L7F-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ezrv8BM9sVap5lZGodFx-3" target="53pI2VVZi_R9F05QZi0w-18" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ciQ16A8ldrNPRgCq4L7F-24" value="GetTrips()&lt;br&gt;-to compose offers" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ciQ16A8ldrNPRgCq4L7F-23" vertex="1" connectable="0">
-          <mxGeometry x="-0.2628" y="-1" relative="1" as="geometry">
-            <mxPoint x="13" as="offset" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="ezrv8BM9sVap5lZGodFx-3" value="&lt;b&gt;Offer service&lt;/b&gt;&lt;br&gt;&lt;br&gt;Trip configuration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-839.8299999999999" y="-600" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="ciQ16A8ldrNPRgCq4L7F-27" value="&lt;h1&gt;&lt;font style=&quot;font-size: 18px&quot;&gt;Description&lt;/font&gt;&lt;/h1&gt;&lt;p&gt;* All communication between services is done using broker service (rabbitMQ)&lt;/p&gt;&lt;p&gt;* TO and Bank services are not implemented - communication with them will be simulated&amp;nbsp;&lt;/p&gt;&lt;p&gt;* API Gateway translates queries from web clients to relevant service&lt;/p&gt;&lt;p&gt;Client - (HTTP) - API Gateway - (AMQP) - Services&lt;/p&gt;&lt;p&gt;* In first stage, Scrapper will fill trips info. Offers configuration will be generated&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-740" y="-840" width="310" height="240" as="geometry" />
-        </mxCell>
-        <mxCell id="KAAXwzxbDOeGJ2B8r-yM-1" value="&lt;b&gt;Reservation service&lt;/b&gt;&lt;br&gt;&lt;p&gt;Store number of reserved/bought offers&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="-885" y="-458" width="160.17" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
