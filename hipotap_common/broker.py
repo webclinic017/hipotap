@@ -8,14 +8,17 @@ MAX_CONNECTION_ATTEMPTS = 100
 def connect_to_brocker():
     credentials = pika.PlainCredentials("guest", "guest")
     parameters = pika.ConnectionParameters("broker", 5672, "/", credentials)
-    for i in range(MAX_CONNECTION_ATTEMPTS):
+    counter = 1
+    while True:
         try:
             connection = pika.BlockingConnection(parameters)
             return connection
-        except pika.exceptions.AMQPConnectionError:
+        except Exception as e:
             print(
-                f"Failed to connect to broker, retrying in 1 second ... [{i+1}/{MAX_CONNECTION_ATTEMPTS}]"
+                f"Failed to connect to broker, retrying in 1 second ... [{counter}]"
             )
+            print(e)
+            counter += 1
             time.sleep(1)
 
     raise Exception("Broker server is not available")
